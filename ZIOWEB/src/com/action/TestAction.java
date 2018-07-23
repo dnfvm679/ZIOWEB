@@ -14,5 +14,4 @@ public class TestAction implements Action{
 		RequestDispatcher ds = request.getRequestDispatcher(url);
 		ds.forward(request, response);
 	}
-
 }
