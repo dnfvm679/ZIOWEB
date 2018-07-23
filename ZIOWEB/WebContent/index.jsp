@@ -1,12 +1,14 @@
+<%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta content="charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Google jQuery file -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Bootstrap file -->
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
@@ -14,6 +16,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-이것은 Index페이지 입니다.
+<a href="Factory?cmd=test">이것은 Index페이지 입니다.</a>
+<%
+	DBManager dbm = DBManager.getInstance();
+%>
 </body>
 </html>
