@@ -16,9 +16,42 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="Factory?cmd=test">이것은 Index페이지 입니다.</a>
-<%
-	DBManager dbm = DBManager.getInstance();
-%>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<!-- Brand/logo -->
+		<a class="navbar-brand" href="#">ZIONEX</a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!-- Links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="#">메인</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">문의하기</a></li>
+				<li class="nav-item"><a class="nav-link" href="#">찾아오시는 길</a></li>
+			</ul>
+			
+			<!-- Dropdown -->
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbardrop"
+					data-toggle="dropdown"> 로그인하기 </a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">로그인</a> <a class="dropdown-item"
+							href="#">회원가입</a>
+					</div></li>
+
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<h3>Brand /</h3>
+		<p>The .navbar-brand class is used to highlight the
+			brand/logo/project name of your page.</p>
+	</div>
 </body>
 </html>
