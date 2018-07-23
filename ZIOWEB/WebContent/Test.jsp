@@ -1,4 +1,3 @@
-<%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,9 +15,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="Factory?cmd=test">이것은 Index페이지 입니다.</a>
-<%
-	DBManager dbm = DBManager.getInstance();
-%>
+	여기는 테스트페이지 입니다.
 </body>
 </html>
