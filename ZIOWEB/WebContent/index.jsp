@@ -54,9 +54,9 @@
 			%>
 			<!-- Dropdown -->
 			<ul class="navbar-nav ml-auto">
-				<li class="nav-item dropdown"><
+				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbardrop"
-					data-toggle="dropdown"> 내 정보 </a>
+					data-toggle="dropdown"> 내정보 </a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="#">회원정보</a>
 						<a class="dropdown-item" href="#">로그아웃</a>

@@ -59,10 +59,8 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th colspan="2">
-								<input type="hidden" value="loginAction" name="cmd">
-								로그인
-								</th>
+								<th colspan="2"><input type="hidden" value="loginAction"
+									name="cmd"> 로그인</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -70,11 +68,8 @@
 								<td>아이디</td>
 								<td>
 									<div class="form-group">
-										<input type="email" class="form-control" id="email"
-											placeholder="Enter Email" name="email">
-											<%
-												session.setAttribute("id", "");
-											%>
+										<input type="text" class="form-control" placeholder="Enter ID"
+											name="userid">
 									</div>
 								</td>
 							</tr>
@@ -82,14 +77,15 @@
 								<td>비밀번호</td>
 								<td>
 									<div class="form-group">
-										<input type="password" class="form-control" id="email"
-											placeholder="Enter Password" name="password">
+										<input type="password" class="form-control"
+											placeholder="Enter Password" name="userpw">
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td class="float-right"><button class="btn btn-primary" type="submit">로그인</button>
+								<td class="float-right"><button class="btn btn-primary"
+										type="submit">로그인</button>
 									<button class="btn btn-primary" type="reset">초기화</button></td>
 							</tr>
 						</tbody>
