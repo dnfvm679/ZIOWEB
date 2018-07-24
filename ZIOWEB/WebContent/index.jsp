@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
 <script src="/ZIOWEB/js/bootstrap.js"></script>
-<title>Insert title here</title>
+<title>ZIOWEB</title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -30,21 +30,42 @@
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="#">메인</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">문의하기</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">찾아오시는 길</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/ZIOWEB/Factory?cmd=test">문의하기</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/ZIOWEB/Factory?cmd=test">찾아오시는 길</a></li>
 			</ul>
-			
+			<%
+				if (session.getAttribute("email") == null) {
+			%>
 			<!-- Dropdown -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbardrop"
 					data-toggle="dropdown"> 로그인하기 </a>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">로그인</a> <a class="dropdown-item"
-							href="#">회원가입</a>
+						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=loginform">로그인</a>
+						<a class="dropdown-item" href="#">회원가입</a>
 					</div></li>
 
 			</ul>
+			<%
+				} else {
+			%>
+			<!-- Dropdown -->
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item dropdown"><
+					class="nav-link dropdown-toggle" href="#" id="navbardrop"
+					data-toggle="dropdown"> 내 정보 </a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">회원정보</a>
+						<a class="dropdown-item" href="#">로그아웃</a>
+					</div></li>
+
+			</ul>
+			<%
+				}
+			%>
 		</div>
 	</nav>
 
