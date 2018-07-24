@@ -58,7 +58,7 @@
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
+						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원관리</a>
 						<%
 							}
 						%>
@@ -74,9 +74,65 @@
 	<!-- End of Navigation -->
 
 	<div class="container-fluid">
-		<h3>Brand /</h3>
-		<p>The .navbar-brand class is used to highlight the
-			brand/logo/project name of your page.</p>
+		<br>
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6" style="text-align: center">
+				<form action="/ZIOWEB/Factory" method="post">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th colspan="2"><input type="hidden" value="addUser"
+									name="cmd">유저 추가하기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>아이디</td>
+								<td>
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Enter ID"
+											name="userid">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>이름</td>
+								<td>
+									<div class="form-group">
+										<input type="text" class="form-control"
+											placeholder="Enter Name" name="userName">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>직책</td>
+								<td>
+									<div class="form-group">
+										<input type="text" class="form-control"
+											placeholder="Enter Position" name="position">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>Email</td>
+								<td>
+									<div class="form-group">
+										<input type="email" class="form-control"
+											placeholder="Enter Email" name="email">
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div class="float-right"><button class="btn btn-primary"
+							type="submit">추가하기</button>
+						<button class="btn btn-primary" type="reset">초기화</button></div>
+				</form>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
 	</div>
 </body>
 </html>

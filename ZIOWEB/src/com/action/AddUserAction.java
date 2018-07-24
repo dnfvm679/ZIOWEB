@@ -8,22 +8,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dao.UsersDAO;
+import com.dto.usersVO;
 
-public class LoginAction implements Action {
+public class AddUserAction implements Action{
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userid = request.getParameter("userid");
-		String userpw = request.getParameter("userpw");
-		String url = "index.jsp";
+		usersVO user = new usersVO();
+		user.setId(request.getParameter("userid"));
+		user.setName(request.getParameter("userName"));
+		user.setEmail(request.getParameter("email"));
+		user.setPosition(request.getParameter("position"));
 		UsersDAO usersdao = new UsersDAO();
-		boolean result = usersdao.Login(userid, userpw);
-		if (result) {
-			request.getSession().setAttribute("userid", userid);
+		if(usersdao.addUser(user)) {
+			String url = "/ZIOWEB/Factory?cmd=useradmin&page=1";
 			response.sendRedirect(url);
-		} else {
+		}else {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('Login Failed');");
+			out.println("alert('User Add Failed');");
 			out.println("history.back();");
 			out.println("</script>");
 		}

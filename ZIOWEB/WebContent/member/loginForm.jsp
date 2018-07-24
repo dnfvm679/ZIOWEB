@@ -29,26 +29,49 @@
 		<!-- Links -->
 		<div class="collapse navbar-collapse" id="collapsibleNavbar">
 			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="#">메인</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/ZIOWEB/Factory?cmd=main">메인</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/ZIOWEB/Factory?cmd=test">문의하기</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/ZIOWEB/Factory?cmd=test">찾아오시는 길</a></li>
 			</ul>
-
-			<!-- Dropdown -->
+			<%
+				if (session.getAttribute("userid") == null) {
+			%>
+			<!-- Login Button -->
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link"
+					href="/ZIOWEB/Factory?cmd=loginform">로그인</a></li>
+			</ul>
+			<%
+				} else {
+			%>
+			<!-- Member info -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="navbardrop"
-					data-toggle="dropdown"> 로그인하기 </a>
+					data-toggle="dropdown"> 내정보 </a>
+
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=loginform">로그인</a>
-						<a class="dropdown-item" href="#">회원가입</a>
+						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원정보</a>
+						<%
+							if (session.getAttribute("userid").toString().equals("ADMIN")) {
+						%>
+						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원관리</a>
+						<%
+							}
+						%>
+						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=logout">로그아웃</a>
 					</div></li>
 
 			</ul>
+			<%
+				}
+			%>
 		</div>
 	</nav>
+	<!-- End of Navigation -->
 
 	<div class="container-fluid">
 		<br>
