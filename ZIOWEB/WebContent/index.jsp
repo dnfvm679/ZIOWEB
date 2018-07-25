@@ -12,6 +12,7 @@
 <!-- Bootstrap file -->
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="/ZIOWEB/js/bootstrap.js"></script>
 <title>ZIOWEB</title>
 </head>
@@ -58,7 +59,8 @@
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
+						<a class="dropdown-item"
+							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
 						<%
 							}
 						%>
@@ -72,11 +74,20 @@
 		</div>
 	</nav>
 	<!-- End of Navigation -->
-
-	<div class="container-fluid">
-		<h3>Brand /</h3>
-		<p>The .navbar-brand class is used to highlight the
-			brand/logo/project name of your page.</p>
-	</div>
+	
+	<aside style="float: left; width: 10%">
+		<a href="#">Link1</a>
+		<br>
+		<a href="#">Link2</a>
+		<br>
+		<a href="#">Link3</a>
+	</aside>
+	<section style="float: left">
+		<div class="container-fluid">
+			<h3>Brand /</h3>
+			<p>The .navbar-brand class is used to highlight the
+				brand/logo/project name of your page.</p>
+		</div>
+	</section>
 </body>
 </html>

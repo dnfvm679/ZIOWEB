@@ -1,1 +1,7 @@
 @charset "UTF-8";
+nav, footer{
+	height: 10%;
+}
+aside, section{
+	height: 80%;
+}

@@ -12,6 +12,7 @@
 <!-- Bootstrap file -->
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="/ZIOWEB/js/bootstrap.js"></script>
 <title>ZIOWEB</title>
 </head>
@@ -58,7 +59,8 @@
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원관리</a>
+						<a class="dropdown-item"
+							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
 						<%
 							}
 						%>
@@ -73,10 +75,17 @@
 	</nav>
 	<!-- End of Navigation -->
 
-	<div class="container-fluid">
+	<!-- Sidebar -->
+	<div class="w3-sidebar w3-bar-block" style="width: 10%">
+		<a href="#" class="w3-bar-item w3-button">Link 1</a> <a href="#"
+			class="w3-bar-item w3-button">Link 2</a> <a href="#"
+			class="w3-bar-item w3-button">Link 3</a>
+	</div>
+
+	<div class="container-fluid" style="margin-left: 10%">
 		<br>
 		<div class="row">
-			<div class="col-sm-3"></div>
+			<div class="col-sm-1"></div>
 			<div class="col-sm-6" style="text-align: center">
 				<form action="/ZIOWEB/Factory" method="post">
 					<table class="table table-hover">
@@ -126,12 +135,13 @@
 						</tbody>
 					</table>
 
-					<div class="float-right"><button class="btn btn-primary"
-							type="submit">추가하기</button>
-						<button class="btn btn-primary" type="reset">초기화</button></div>
+					<div class="float-right">
+						<button class="btn btn-primary" type="submit">추가하기</button>
+						<button class="btn btn-primary" type="reset">초기화</button>
+					</div>
 				</form>
 			</div>
-			<div class="col-sm-3"></div>
+			<div class="col-sm-5"></div>
 		</div>
 	</div>
 </body>

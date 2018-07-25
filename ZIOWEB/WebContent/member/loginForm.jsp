@@ -12,6 +12,7 @@
 <!-- Bootstrap file -->
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="/ZIOWEB/js/bootstrap.js"></script>
 <title>ZIOWEB</title>
 </head>
@@ -58,7 +59,7 @@
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원관리</a>
+						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
 						<%
 							}
 						%>

@@ -14,6 +14,7 @@
 <!-- Bootstrap file -->
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="/ZIOWEB/js/bootstrap.js"></script>
 <title>ZIOWEB</title>
 </head>
@@ -60,7 +61,8 @@
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원관리</a>
+						<a class="dropdown-item"
+							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
 						<%
 							}
 						%>
@@ -75,127 +77,132 @@
 	</nav>
 	<!-- End of Navigation -->
 
-	<div class="container-fluid">
-		<br>
-		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6" style="text-align: center">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th colspan="4"><input type="hidden" value="loginAction"
-								name="cmd">회원관리</th>
-						</tr>
-						<tr>
-							<td>아이디</td>
-							<td>이름</td>
-							<td>직책</td>
-							<td>Email</td>
-						</tr>
-					</thead>
-					<tbody>
-						<%
-							ArrayList<usersVO> list = (ArrayList<usersVO>) request.getAttribute("userList");
-							if (list != null) {
-								for (usersVO u : list) {
-						%>
-						<tr>
-							<td><%=u.getId()%></td>
-							<td><%=u.getName()%></td>
-							<td><%=u.getPosition()%></td>
-							<td><%=u.getEmail()%></td>
-						</tr>
-						<%
-							}
-							}
-						%>
-					</tbody>
-				</table>
+	<aside class="bg-dark"style="float: left;width: 20%; height: 80%">
+		<a href="#">Link1</a> <br> <a href="#">Link2</a> <br> <a
+			href="#">Link3</a>
+	</aside>
+	<section style="width: 80%; float: left">
+			<br>
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-7">
+					<table class="table table-hover" style="width: 100%">
+						<thead>
+							<tr>
+								<th colspan="4"><input type="hidden" value="loginAction"
+									name="cmd">회원관리</th>
+							</tr>
+							<tr>
+								<td>아이디</td>
+								<td>이름</td>
+								<td>직책</td>
+								<td>Email</td>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								ArrayList<usersVO> list = (ArrayList<usersVO>) request.getAttribute("userList");
+								if (list != null) {
+									for (usersVO u : list) {
+							%>
+							<tr>
+								<td><%=u.getId()%></td>
+								<td><%=u.getName()%></td>
+								<td><%=u.getPosition()%></td>
+								<td><%=u.getEmail()%></td>
+							</tr>
+							<%
+								}
+								}
+							%>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-sm-4"></div>
 			</div>
-			<div class="col-sm-3"></div>
-		</div>
-		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-2">
-				<ul class="pagination">
-					<%
-						int currpage = Integer.parseInt(request.getParameter("page"));
-						int lastPage = (int) request.getAttribute("lastPage");
-						String keyword = request.getParameter("keyword");
-						String dataType = request.getParameter("dataType");
-						int startPage = (currpage - 1) / 10 + 1;
-						int endPage = startPage + 9;
-						if (endPage > lastPage) {
-							endPage = lastPage;
-						}
-						if (currpage != 1 && keyword == null) {
-					%>
-					<li class="page-item"><a class="page-link"
-						href="/ZIOWEB/Factory?cmd=useradmin&page=<%=currpage - 1%>">Previous</a></li>
-					<%
-						} else if (currpage != 1 && keyword != null) {
-					%>
-					<li class="page-item"><a class="page-link"
-						href="/ZIOWEB/Factory?cmd=userSearch&page=<%=currpage - 1%>&keyword=<%=keyword%>&dataType=<%=dataType%>">Previous</a></li>
-					<%
-						}
-					%>
-					<%
-						for (int i = startPage; i <= endPage; i++) {
-							if (keyword == null) {
-								if (i == currpage) {
-					%>
-					<li class="page-item active"><a class="page-link"
-						href="/ZIOWEB/Factory?cmd=useradmin&page=<%=i%>"><%=i%></a></li>
-					<%
-						} else {
-					%>
-					<li class="page-item"><a class="page-link"
-						href="/ZIOWEB/Factory?cmd=useradmin&page=<%=i%>"><%=i%></a></li>
-					<%
-						}
-							} else if (keyword != null) {
-								if (i == currpage) {
-					%>
-					<li class="page-item active"><a class="page-link"
-						href="/ZIOWEB/Factory?cmd=userSearch&page=<%=i%>&keyword=<%=keyword%>&dataType=<%=dataType%>"><%=i%></a></li>
-					<%
-						} else {
-					%>
-					<li class="page-item"><a class="page-link"
-						href="/ZIOWEB/Factory?cmd=userSearch&page=<%=i%>&keyword=<%=keyword%>&dataType=<%=dataType%>"><%=i%></a></li>
-					<%
-						}
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-2">
+					<ul class="pagination">
+						<%
+							int currpage = Integer.parseInt(request.getParameter("page"));
+							int lastPage = (int) request.getAttribute("lastPage");
+							String keyword = request.getParameter("keyword");
+							String dataType = request.getParameter("dataType");
+							int startPage = (currpage - 1) / 10 + 1;
+							int endPage = startPage + 9;
+							if (endPage > lastPage) {
+								endPage = lastPage;
+							}
+							if (currpage != 1 && keyword == null) {
+						%>
+						<li class="page-item"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=useradmin&page=<%=currpage - 1%>">Previous</a></li>
+						<%
+							} else if (currpage != 1 && keyword != null) {
+						%>
+						<li class="page-item"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=userSearch&page=<%=currpage - 1%>&keyword=<%=keyword%>&dataType=<%=dataType%>">Previous</a></li>
+						<%
+							}
+						%>
+						<%
+							for (int i = startPage; i <= endPage; i++) {
+								if (keyword == null) {
+									if (i == currpage) {
+						%>
+						<li class="page-item active"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=useradmin&page=<%=i%>"><%=i%></a></li>
+						<%
+							} else {
+						%>
+						<li class="page-item"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=useradmin&page=<%=i%>"><%=i%></a></li>
+						<%
+							}
+								} else if (keyword != null) {
+									if (i == currpage) {
+						%>
+						<li class="page-item active"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=userSearch&page=<%=i%>&keyword=<%=keyword%>&dataType=<%=dataType%>"><%=i%></a></li>
+						<%
+							} else {
+						%>
+						<li class="page-item"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=userSearch&page=<%=i%>&keyword=<%=keyword%>&dataType=<%=dataType%>"><%=i%></a></li>
+						<%
+							}
 
+								}
+							} //end of for
+							if (currpage != lastPage) {
+						%>
+						<li class="page-item"><a class="page-link" href="#">Next</a></li>
+						<%
 							}
-						} //end of for
-						if (currpage != lastPage) {
-					%>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-					<%
-						}
-					%>
-				</ul>
+						%>
+					</ul>
+				</div>
+				<div class="col-sm-4">
+					<form class="form-inline" action="/ZIOWEB/Factory">
+						<input type="hidden" value="userSearch" name="cmd"> <input
+							type="hidden" value="1" name="page"> <select
+							class="forom-control mr-sm-2" name="dataType">
+							<option value="id">아이디</option>
+							<option value="name">이름</option>
+							<option value="position">직책</option>
+						</select> <input class="form-control mr-sm-2" type="text" name="keyword"
+							placeholder="Search">
+						<button class="btn btn-primary" type="submit">Search</button>
+					</form>
+				</div>
+				<div class="col-sm-1">
+					<a class="btn btn-primary float-right"
+						href="/ZIOWEB/Factory?cmd=addUserForm">회원추가</a>
+				</div>
+				<div class="col-sm-3"></div>
 			</div>
-			<div class="col-sm-3 ">
-				<form class="form-inline" action="/ZIOWEB/Factory">
-					<input type="hidden" value="userSearch" name="cmd"> <input
-						type="hidden" value="1" name="page"> <select
-						class="forom-control mr-sm-2" name="dataType">
-						<option value="id">아이디</option>
-						<option value="name">이름</option>
-						<option value="position">직책</option>
-					</select> <input class="form-control mr-sm-2" type="text" name="keyword"
-						placeholder="Search">
-					<button class="btn btn-primary" type="submit">Search</button>
-				</form>
-			</div>
-			<div class="col-sm-1">
-				<a class="btn btn-primary float-right"
-					href="/ZIOWEB/Factory?cmd=addUserForm">회원추가</a>
-			</div>
-			<div class="col-sm-3"></div>
-		</div>
-	</div>
+	</section>
+	<footer>aa</footer>
 </body>
 </html>
