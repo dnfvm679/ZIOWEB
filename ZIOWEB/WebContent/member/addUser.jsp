@@ -141,6 +141,7 @@
 						<div class="float-right">
 							<button class="btn btn-primary" type="submit">추가하기</button>
 							<button class="btn btn-primary" type="reset">초기화</button>
+							<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
 						</div>
 					</form>
 				</div>

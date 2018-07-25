@@ -1,5 +1,6 @@
-<%@page import="com.dto.UserVO"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.dto.BoardVO"%>
+<%@page import="com.dto.UserVO"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -62,7 +63,7 @@
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
 						<a class="dropdown-item"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
+							href="/ZIOWEB/Factory?cmd=getBoardList&page=1">회원관리</a>
 						<%
 							}
 						%>
@@ -85,8 +86,6 @@
 		</div>
 	</aside>
 
-	<br>
-	<!-- End of Side bar -->
 	<section>
 		<div class="container-fluid">
 			<div class="row">
@@ -99,23 +98,25 @@
 									name="cmd">회원관리</th>
 							</tr>
 							<tr>
-								<td>아이디</td>
-								<td>이름</td>
-								<td>직책</td>
-								<td>Email</td>
+								<td>게시물번호</td>
+								<td>제목</td>
+								<td>작성자</td>
+								<td>작성일자</td>
+								<td>상태</td>
 							</tr>
 						</thead>
 						<tbody>
 							<%
-								ArrayList<UserVO> list = (ArrayList<UserVO>) request.getAttribute("userList");
-													if (list != null) {
-														for (UserVO u : list) {
+								ArrayList<BoardVO> list = (ArrayList<BoardVO>) request.getAttribute("boardList");
+								if (list != null) {
+									for (BoardVO b : list) {
 							%>
 							<tr>
-								<td><a href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=u.getId()%>"><%=u.getId()%></a></td>
-								<td><%=u.getName()%></td>
-								<td><%=u.getPosition()%></td>
-								<td><%=u.getEmail()%></td>
+								<td><a href="#"><%=b.getBoardnum()%></a></td>
+								<td><a href="/ZIOWEB/Factory?cmd=viewBoard&boardnum=<%=b.getBoardnum() %>"><%=b.getTitle()%></a></td>
+								<td><%=b.getWriter()%></td>
+								<td><%=b.getCreatedate()%></td>
+								<td><%=b.getStatus()%></td>
 							</tr>
 							<%
 								}
@@ -135,7 +136,7 @@
 							int lastPage = (int) request.getAttribute("lastPage");
 							String keyword = request.getParameter("keyword");
 							String dataType = request.getParameter("dataType");
-							int startPage = (currpage - 1) / 3 *3 + 1;
+							int startPage = (currpage - 1) / 3 * 3 + 1;
 							int endPage = startPage + 2;
 							if (endPage > lastPage) {
 								endPage = lastPage;
@@ -143,7 +144,7 @@
 							if (currpage != 1 && keyword == null) {
 						%>
 						<li class="page-item"><a class="page-link"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=<%=currpage - 1%>">Previous</a></li>
+							href="/ZIOWEB/Factory?cmd=getBoardList&page=<%=currpage - 1%>">Previous</a></li>
 						<%
 							} else if (currpage != 1 && keyword != null) {
 						%>
@@ -158,12 +159,12 @@
 									if (i == currpage) {
 						%>
 						<li class="page-item active"><a class="page-link"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=<%=i%>"><%=i%></a></li>
+							href="/ZIOWEB/Factory?cmd=getBoardList&page=<%=i%>"><%=i%></a></li>
 						<%
 							} else {
 						%>
 						<li class="page-item"><a class="page-link"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=<%=i%>"><%=i%></a></li>
+							href="/ZIOWEB/Factory?cmd=getBoardList&page=<%=i%>"><%=i%></a></li>
 						<%
 							}
 								} else if (keyword != null) {
@@ -183,7 +184,8 @@
 							} //end of for
 							if (currpage != lastPage) {
 						%>
-						<li class="page-item"><a class="page-link" href="/ZIOWEB/Factory?cmd=useradmin&page=<%=currpage + 1%>">Next</a></li>
+						<li class="page-item"><a class="page-link"
+							href="/ZIOWEB/Factory?cmd=getBoardList&page=<%=currpage + 1%>">Next</a></li>
 						<%
 							}
 						%>
@@ -194,9 +196,9 @@
 						<input type="hidden" value="userSearch" name="cmd"> <input
 							type="hidden" value="1" name="page"> <select
 							class="forom-control mr-sm-2" name="dataType">
-							<option value="id">아이디</option>
-							<option value="name">이름</option>
-							<option value="position">직책</option>
+							<option value="title">제목</option>
+							<option value="writer">작성자</option>
+							<option value="t+w">제목+작성자</option>
 						</select> <input class="form-control mr-sm-2" type="text" name="keyword"
 							placeholder="Search">
 						<button class="btn btn-primary" type="submit">Search</button>
@@ -204,12 +206,11 @@
 				</div>
 				<div class="col-sm-1">
 					<a class="btn btn-primary float-right"
-						href="/ZIOWEB/Factory?cmd=addUserForm">회원추가</a>
+						href="/ZIOWEB/Factory?cmd=writeIssueForm">글쓰기</a>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>
 		</div>
 	</section>
-	<footer>aa</footer>
 </body>
 </html>

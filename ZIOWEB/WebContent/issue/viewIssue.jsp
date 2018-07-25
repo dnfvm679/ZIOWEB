@@ -1,4 +1,5 @@
-<%@page import="com.dto.UserVO"%>
+<%@page import="com.dto.BoardVO"%>
+<%@page import="java.io.PrintWriter"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -75,7 +76,7 @@
 		</div>
 	</nav>
 	<!-- End of Navigation -->
-	
+
 	<!-- Side Menu -->
 	<aside class="bg-dark">
 		<div class="container-fluid">
@@ -83,70 +84,59 @@
 				href="#">Link3</a>
 		</div>
 	</aside>
-	
+	<!-- End of Side Menu -->
+
 	<section>
 		<%
-			UserVO user = (UserVO)request.getAttribute("user");
+			BoardVO board = (BoardVO) request.getAttribute("board");
 		%>
 		<div class="container-fluid">
 			<br>
 			<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-7" style="text-align: center">
-					<form action="/ZIOWEB/Factory" method="post">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th colspan="2"><input type="hidden" value="updateUser"
-										name="cmd">유저 수정하기</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>아이디</td>
-									<td>
-										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getId() %>" name="userid">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>이름</td>
-									<td>
-										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getName() %>" name="userName">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>직책</td>
-									<td>
-										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getPosition() %>" name="position">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>Email</td>
-									<td>
-										<div class="form-group">
-											<input type="email" class="form-control"
-												value="<%=user.getEmail() %>" name="email">
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th colspan="2"><input type="hidden" value="writeIssue"
+									name="cmd">글 상세보기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="tag">제목</td>
+								<td><%=board.getTitle()%></td>
+							</tr>
+							<tr>
+								<td class="tag">작성자</td>
+								<td><%=board.getWriter()%></td>
+							</tr>
+							<tr>
+								<td class="tag">작성일자</td>
+								<td><%=board.getCreatedate()%></td>
+							</tr>
+							<tr>
+								<td class="tag">내용</td>
+								<td>
+									<div><%=board.getContent()%></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
-						<div class="float-right">
-							<button class="btn btn-primary" type="submit">수정하기</button>
-							<button class="btn btn-primary" type="reset">초기화</button>
-							<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
-						</div>
-					</form>
+					<div class="float-right">
+						<%
+							if (!board.getStatus().equals("C") && board.getWriter().equals((String)session.getAttribute("userid"))) {
+						%>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=updateIssueForm&boardnum=<%=board.getBoardnum()%>">수정하기</a>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=deleteIssue&boardnum=<%=board.getBoardnum()%>">삭제하기</a>
+						<%
+							}
+						%>
+						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
+					</div>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>

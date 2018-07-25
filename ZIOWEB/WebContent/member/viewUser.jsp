@@ -1,4 +1,4 @@
-<%@page import="com.dto.usersVO"%>
+<%@page import="com.dto.UserVO"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -86,7 +86,7 @@
 
 	<section>
 		<%
-			usersVO user = (usersVO)request.getAttribute("user");
+			UserVO user = (UserVO)request.getAttribute("user");
 		%>
 		<div class="container-fluid">
 			<br>

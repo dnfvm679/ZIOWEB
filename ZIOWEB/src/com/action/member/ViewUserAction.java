@@ -1,4 +1,4 @@
-package com.action;
+package com.action.member;
 
 import java.io.IOException;
 
@@ -7,16 +7,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.action.Action;
 import com.dao.UsersDAO;
-import com.dto.usersVO;
+import com.dto.UserVO;
 
-public class UpdateUserForm implements Action{
+public class ViewUserAction implements Action{
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "member/updateUser.jsp";
+		String url = "member/viewUser.jsp";
 		String userid = request.getParameter("userid");
 		UsersDAO usersdao = new UsersDAO();
-		usersVO user = usersdao.getUser(userid);
+		UserVO user = usersdao.getUser(userid);
 		request.setAttribute("user", user);
 		RequestDispatcher ds = request.getRequestDispatcher(url);
 		ds.forward(request, response);

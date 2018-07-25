@@ -1,6 +1,6 @@
 package com.dto;
 
-public class usersVO {
+public class UserVO {
 	private String id;
 	private String position;
 	private String name;

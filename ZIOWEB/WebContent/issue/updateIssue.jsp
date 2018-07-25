@@ -1,4 +1,5 @@
-<%@page import="com.dto.UserVO"%>
+<%@page import="com.dto.BoardVO"%>
+<%@page import="java.io.PrintWriter"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -75,7 +76,7 @@
 		</div>
 	</nav>
 	<!-- End of Navigation -->
-	
+
 	<!-- Side Menu -->
 	<aside class="bg-dark">
 		<div class="container-fluid">
@@ -83,10 +84,11 @@
 				href="#">Link3</a>
 		</div>
 	</aside>
-	
+	<!-- End of Side Menu -->
+
 	<section>
 		<%
-			UserVO user = (UserVO)request.getAttribute("user");
+			BoardVO board = (BoardVO) request.getAttribute("board");
 		%>
 		<div class="container-fluid">
 			<br>
@@ -97,44 +99,36 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th colspan="2"><input type="hidden" value="updateUser"
-										name="cmd">유저 수정하기</th>
+									<th colspan="2"><input type="hidden" value="updateIssue"
+										name="cmd"> <input type="hidden" value="<%=request.getParameter("boardnum") %>"
+										name="boardnum"> 글 수정하기</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>아이디</td>
+									<td>제목</td>
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control"
-												value="<%=user.getId() %>" name="userid">
+												value="<%=board.getTitle()%>" name="title">
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td>이름</td>
+									<td>작성자</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getName() %>" name="userName">
+											<input type="text" class="form-control" name="writer"
+												value=<%=board.getWriter()%> readonly="readonly">
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td>직책</td>
+									<td>내용</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getPosition() %>" name="position">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>Email</td>
-									<td>
-										<div class="form-group">
-											<input type="email" class="form-control"
-												value="<%=user.getEmail() %>" name="email">
+											<textarea id="issuewrite" class="form-control" rows="1"
+												cols="1" name="content"><%=board.getContent()%></textarea>
 										</div>
 									</td>
 								</tr>
@@ -142,7 +136,7 @@
 						</table>
 
 						<div class="float-right">
-							<button class="btn btn-primary" type="submit">수정하기</button>
+							<button class="btn btn-primary" type="submit">작성하기</button>
 							<button class="btn btn-primary" type="reset">초기화</button>
 							<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
 						</div>

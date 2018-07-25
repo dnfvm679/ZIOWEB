@@ -3,13 +3,15 @@ package com.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.dto.usersVO;
+import org.apache.log4j.Logger;
+
+import com.dto.UserVO;
 import com.util.DBManager;
 
 public class UsersDAO {
+	private Logger log = Logger.getLogger(this.getClass());
 	Connection conn = null;
 
 	public UsersDAO() {
@@ -27,6 +29,7 @@ public class UsersDAO {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				if (rs.getString("PW").equals(userpw)) {
+					log.info("=====Login : "+userid);
 					return true;
 				} else
 					return false;
@@ -39,8 +42,8 @@ public class UsersDAO {
 		}
 	} // End of Login
 
-	public ArrayList<usersVO> getUsers(int page) { // Get User list
-		ArrayList<usersVO> list = new ArrayList<usersVO>();
+	public ArrayList<UserVO> getUsers(int page) { // Get User list
+		ArrayList<UserVO> list = new ArrayList<UserVO>();
 		String sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND USED='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -53,7 +56,7 @@ public class UsersDAO {
 			if (rs.next()) {
 				do {
 					if (rs.getInt("ROWNUM") >= startNum && rs.getInt("ROWNUM") <= endNum) {
-						usersVO users = new usersVO();
+						UserVO users = new UserVO();
 						users.setId(rs.getString("id"));
 						users.setEmail(rs.getString("email"));
 						users.setPosition(rs.getString("position"));
@@ -72,7 +75,6 @@ public class UsersDAO {
 	} // End of getUsers
 
 	public int totalUser() { // Get User list
-		ArrayList<usersVO> list = new ArrayList<usersVO>();
 		String sql = "SELECT COUNT(*) FROM USERS WHERE USED='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -90,7 +92,7 @@ public class UsersDAO {
 		}
 	} // End of getUsers
 
-	public boolean addUser(usersVO user) {
+	public boolean addUser(UserVO user) {
 		String sql = "INSERT INTO USERS VALUES(?,'1234',?,?,?)";
 		PreparedStatement pstmt = null;
 		try {
@@ -104,10 +106,10 @@ public class UsersDAO {
 		} catch (Exception e) {
 			return false;
 		}
-	} //create new user
+	} // create new user
 
-	public ArrayList<usersVO> getUsers(String dataType, String keyword, int page) { // Get User list
-		ArrayList<usersVO> list = new ArrayList<usersVO>();
+	public ArrayList<UserVO> getUsers(String dataType, String keyword, int page) { // Get User list
+		ArrayList<UserVO> list = new ArrayList<UserVO>();
 		String sql = null;
 		if (dataType.equals("name")) {
 			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND NAME LIKE ? AND USED='Y'";
@@ -132,7 +134,7 @@ public class UsersDAO {
 			if (rs.next()) {
 				do {
 					if (rs.getInt("ROWNUM") >= startNum && rs.getInt("ROWNUM") <= endNum) {
-						usersVO users = new usersVO();
+						UserVO users = new UserVO();
 						users.setId(rs.getString("id"));
 						users.setEmail(rs.getString("email"));
 						users.setPosition(rs.getString("position"));
@@ -179,8 +181,8 @@ public class UsersDAO {
 		}
 	} // End of totalUsers
 
-	public usersVO getUser(String userid) { // Get User list
-		usersVO user = new usersVO();
+	public UserVO getUser(String userid) { // Get User list
+		UserVO user = new UserVO();
 		String sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ID = ? AND USED='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -202,8 +204,8 @@ public class UsersDAO {
 			return null;
 		}
 	} // End of getUsers
-	
-	public boolean updateUser(usersVO user) {
+
+	public boolean updateUser(UserVO user) {
 		String sql = "UPDATE USERS SET NAME=?,POSITION=?,EMAIL=? WHERE ID=?";
 		PreparedStatement pstmt = null;
 		try {
@@ -219,7 +221,7 @@ public class UsersDAO {
 			return false;
 		}
 	} // End of Update User
-	
+
 	public boolean deleteUser(String userid) {
 		String sql = "UPDATE USERS SET USED='N' WHERE ID=?";
 		PreparedStatement pstmt = null;

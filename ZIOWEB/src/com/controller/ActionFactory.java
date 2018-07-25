@@ -1,19 +1,26 @@
 package com.controller;
 
 import com.action.Action;
-import com.action.AddUserAction;
-import com.action.AddUserForm;
 import com.action.BackAction;
-import com.action.DeleteAction;
-import com.action.LoginAction;
-import com.action.LoginFormAction;
-import com.action.LogoutAction;
 import com.action.MainAction;
-import com.action.SearchUserAction;
-import com.action.UpdateUserAction;
-import com.action.UpdateUserForm;
-import com.action.UserAdminForm;
-import com.action.ViewUserAction;
+import com.action.board.DeleteIssueAction;
+import com.action.board.GetBoardListAction;
+import com.action.board.UpdateIssueAction;
+import com.action.board.UpdateIssueForm;
+import com.action.board.ViewBoardAction;
+import com.action.board.WriteIssueAction;
+import com.action.board.WriteIssueForm;
+import com.action.member.AddUserAction;
+import com.action.member.AddUserForm;
+import com.action.member.DeleteUserAction;
+import com.action.member.LoginAction;
+import com.action.member.LoginFormAction;
+import com.action.member.LogoutAction;
+import com.action.member.SearchUserAction;
+import com.action.member.UpdateUserAction;
+import com.action.member.UpdateUserForm;
+import com.action.member.UserAdminForm;
+import com.action.member.ViewUserAction;
 
 public class ActionFactory {
 	private static ActionFactory af = new ActionFactory();
@@ -27,32 +34,69 @@ public class ActionFactory {
 
 	public Action getAction(String cmd) {
 		Action action = null;
-		if (cmd.equals("main")) {
-			action = new MainAction(); // MainPage
-		} else if (cmd.equals("loginform")) {
+		switch (cmd) {
+		case "main":
+			action = new MainAction();
+			break;
+		case "loginform":
 			action = new LoginFormAction(); // LoginPage
-		} else if (cmd.equals("loginAction")) {
+			break;
+		case "loginAction":
 			action = new LoginAction();
-		} else if (cmd.equals("logout")) { // Log out
+			break;
+		case "logout": // Log out
 			action = new LogoutAction();
-		} else if (cmd.equals("useradmin")) { // User Management
+			break;
+		case "useradmin": // User Management
 			action = new UserAdminForm();
-		} else if (cmd.equals("addUser")) { // Create New user
+			break;
+		case "addUser": // Create New user
 			action = new AddUserAction();
-		} else if (cmd.equals("addUserForm")) { // show new user input form
+			break;
+		case "addUserForm": // show new user input form
 			action = new AddUserForm();
-		} else if (cmd.equals("userSearch")) { // search specific user
+			break;
+		case "userSearch": // search specific user
 			action = new SearchUserAction();
-		} else if (cmd.equals("viewUser")) { // show user's detail
+			break;
+		case "viewUser": // show user's detail
 			action = new ViewUserAction();
-		} else if (cmd.equals("updateUserForm")) { // show update form for update user info
+			break;
+		case "updateUserForm": // show update form for update user info
 			action = new UpdateUserForm();
-		} else if (cmd.equals("updateUser")) { // update user's info
+			break;
+		case "updateUser": // update user's info
 			action = new UpdateUserAction();
-		} else if (cmd.equals("deleteUser")) {
-			action = new DeleteAction();
-		} else if (cmd.equals("back")) { // go to previous page
+			break;
+		case "deleteUser": // User delete Action
+			action = new DeleteUserAction();
+			break;
+		case "back": // go to previous page
 			action = new BackAction();
+			break;
+		case "getBoardList": // get Board List
+			action = new GetBoardListAction();
+			break;
+		case "writeIssueForm": // go to Insert Form about new Issue
+			action = new WriteIssueForm();
+			break;
+		case "writeIssue": // write Action for new Issue
+			action = new WriteIssueAction();
+			break;
+		case "viewBoard": // Show Detail about specific issue
+			action = new ViewBoardAction();
+			break;
+		case "updateIssueForm": // insert form for update
+			action = new UpdateIssueForm();
+			break;
+		case "updateIssue": // Update Issue
+			action = new UpdateIssueAction();
+			break;
+		case "deleteIssue": // Issue delete Action
+			action = new DeleteIssueAction();
+			break;
+		default:
+			break;
 		}
 		return action;
 	}

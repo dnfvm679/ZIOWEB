@@ -25,3 +25,13 @@ aside{
 .label{
 	text-align: center;
 }
+
+#issuewrite{
+	height: 500px;
+	width: 100%;
+}
+
+.tag{
+	text-align: center;
+	width: 20%;
+}
