@@ -18,7 +18,7 @@ public class UsersDAO {
 	}
 
 	public boolean Login(String userid, String userpw) { // Login Action
-		String sql = "SELECT PW FROM USERS WHERE ID=?";
+		String sql = "SELECT PW FROM USERS WHERE ID=? AND USED='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -41,7 +41,7 @@ public class UsersDAO {
 
 	public ArrayList<usersVO> getUsers(int page) { // Get User list
 		ArrayList<usersVO> list = new ArrayList<usersVO>();
-		String sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ?";
+		String sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND USED='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int startNum = (page - 1) * 10 + 1;
@@ -73,7 +73,7 @@ public class UsersDAO {
 
 	public int totalUser() { // Get User list
 		ArrayList<usersVO> list = new ArrayList<usersVO>();
-		String sql = "SELECT COUNT(*) FROM USERS";
+		String sql = "SELECT COUNT(*) FROM USERS WHERE USED='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -104,17 +104,17 @@ public class UsersDAO {
 		} catch (Exception e) {
 			return false;
 		}
-	}
+	} //create new user
 
 	public ArrayList<usersVO> getUsers(String dataType, String keyword, int page) { // Get User list
 		ArrayList<usersVO> list = new ArrayList<usersVO>();
 		String sql = null;
 		if (dataType.equals("name")) {
-			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND NAME LIKE ?";
+			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND NAME LIKE ? AND USED='Y'";
 		} else if (dataType.equals("position")) {
-			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND POSITION LIKE ?";
+			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND POSITION LIKE ? AND USED='Y'";
 		} else if (dataType.equals("id")) {
-			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND ID LIKE ?";
+			sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ROWNUM < ? AND ID LIKE ? AND USED='Y'";
 		} else {
 			return null;
 		}
@@ -126,7 +126,7 @@ public class UsersDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, endNum + 1);
-			String keyword_s = "%"+keyword+"%";
+			String keyword_s = "%" + keyword + "%";
 			pstmt.setString(2, keyword_s);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -153,11 +153,11 @@ public class UsersDAO {
 	public int totalUser(String dataType, String keyword) { // Get User list
 		String sql = null;
 		if (dataType.equals("name")) {
-			sql = "SELECT COUNT(*) FROM USERS WHERE NAME LIKE ?";
+			sql = "SELECT COUNT(*) FROM USERS WHERE NAME LIKE ? AND USED='Y'";
 		} else if (dataType.equals("position")) {
-			sql = "SELECT COUNT(*) FROM USERS WHERE POSITION LIKE ?";
+			sql = "SELECT COUNT(*) FROM USERS WHERE POSITION LIKE ? AND USED='Y'";
 		} else if (dataType.equals("id")) {
-			sql = "SELECT COUNT(*) FROM USERS WHERE ID LIKE ?";
+			sql = "SELECT COUNT(*) FROM USERS WHERE ID LIKE ? AND USED='Y'";
 		} else {
 			return -1;
 		}
@@ -165,7 +165,7 @@ public class UsersDAO {
 		ResultSet rs = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			String keyword_s = "%"+keyword+"%";
+			String keyword_s = "%" + keyword + "%";
 			pstmt.setString(1, keyword_s);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -177,5 +177,60 @@ public class UsersDAO {
 			e.printStackTrace();
 			return -1;
 		}
+	} // End of totalUsers
+
+	public usersVO getUser(String userid) { // Get User list
+		usersVO user = new usersVO();
+		String sql = "SELECT ROWNUM,ID,NAME,POSITION,EMAIL FROM USERS WHERE ID = ? AND USED='Y'";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				user.setId(rs.getString("id"));
+				user.setEmail(rs.getString("email"));
+				user.setPosition(rs.getString("position"));
+				user.setName(rs.getString("name"));
+				return user;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	} // End of getUsers
+	
+	public boolean updateUser(usersVO user) {
+		String sql = "UPDATE USERS SET NAME=?,POSITION=?,EMAIL=? WHERE ID=?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getName());
+			pstmt.setString(2, user.getPosition());
+			pstmt.setString(3, user.getEmail());
+			pstmt.setString(4, user.getId());
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	} // End of Update User
+	
+	public boolean deleteUser(String userid) {
+		String sql = "UPDATE USERS SET USED='N' WHERE ID=?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	} // End of Delete User
 }

@@ -1,3 +1,4 @@
+<%@page import="com.dto.usersVO"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -74,7 +75,7 @@
 		</div>
 	</nav>
 	<!-- End of Navigation -->
-	
+
 	<!-- Side Menu -->
 	<aside class="bg-dark">
 		<div class="container-fluid">
@@ -82,67 +83,48 @@
 				href="#">Link3</a>
 		</div>
 	</aside>
-	<!-- End of Side Menu -->
-	
+
 	<section>
+		<%
+			usersVO user = (usersVO)request.getAttribute("user");
+		%>
 		<div class="container-fluid">
 			<br>
 			<div class="row">
 				<div class="col-sm-1"></div>
-				<div class="col-sm-7" style="text-align: center">
-					<form action="/ZIOWEB/Factory" method="post">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th colspan="2"><input type="hidden" value="addUser"
-										name="cmd">유저 추가하기</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>아이디</td>
-									<td>
-										<div class="form-group">
-											<input type="text" class="form-control"
-												placeholder="Enter ID" name="userid">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>이름</td>
-									<td>
-										<div class="form-group">
-											<input type="text" class="form-control"
-												placeholder="Enter Name" name="userName">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>직책</td>
-									<td>
-										<div class="form-group">
-											<input type="text" class="form-control"
-												placeholder="Enter Position" name="position">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td>Email</td>
-									<td>
-										<div class="form-group">
-											<input type="email" class="form-control"
-												placeholder="Enter Email" name="email">
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+				<div class="col-sm-7">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th class="label" colspan="2">유저 상세보기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="label">아이디</td>
+								<td><%=user.getId() %></td>
+							</tr>
+							<tr>
+								<td class="label">이름</td>
+								<td><%=user.getName() %></td>
+							</tr>
+							<tr>
+								<td class="label">직책</td>
+								<td><%=user.getPosition() %></td>
+							</tr>
+							<tr>
+								<td class="label">Email</td>
+								<td><%=user.getEmail() %></td>
+							</tr>
+						</tbody>
+					</table>
 
-						<div class="float-right">
-							<button class="btn btn-primary" type="submit">추가하기</button>
-							<button class="btn btn-primary" type="reset">초기화</button>
-						</div>
-					</form>
+					<div class="float-right">
+						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=updateUserForm&userid=<%=user.getId() %>">수정하기</a>
+						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=deleteUser&userid=<%=user.getId() %>">삭제하기</a>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
+					</div>
 				</div>
 				<div class="col-sm-4"></div>
 			</div>

@@ -19,7 +19,7 @@
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<!-- Brand/logo -->
-		<a class="navbar-brand" href="#">ZIONEX</a>
+		<a class="navbar-brand" href="/ZIOWEB/Factory?cmd=main">ZIONEX</a>
 
 		<!-- Toggler/collapsibe Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -74,15 +74,24 @@
 		</div>
 	</nav>
 	<!-- End of Navigation -->
-	
-	<aside style="float: left; width: 10%">
-		<a href="#">Link1</a>
+
+	<!-- Side Menu -->
+	<aside class="bg-dark">
+		<%
+			if (session.getAttribute("userid") != null) {
+				String userid = (String) session.getAttribute("userid");
+		%>
+		<div><%=userid%>님이 로그인 되었습니다.
+		</div>
 		<br>
-		<a href="#">Link2</a>
-		<br>
-		<a href="#">Link3</a>
+		<%
+			}
+		%>
+		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a> <br>
+		<br> <a href="#">이슈게시판</a>
 	</aside>
-	<section style="float: left">
+	<!-- End of SideMenu -->
+	<section>
 		<div class="container-fluid">
 			<h3>Brand /</h3>
 			<p>The .navbar-brand class is used to highlight the

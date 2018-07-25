@@ -1,7 +1,27 @@
 @charset "UTF-8";
 nav, footer{
+	float:left;
 	height: 10%;
+	width:100%;
 }
-aside, section{
+
+footer{
+	text-align: center;	
+}
+
+section{
+	width:80%;
+	float: left;
 	height: 80%;
+}
+aside{
+	width: 20%;
+	height: 80%;
+	float: left;
+	text-align :center;
+	color: white;
+}
+
+.label{
+	text-align: center;
 }

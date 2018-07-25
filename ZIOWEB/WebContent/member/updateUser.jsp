@@ -1,3 +1,4 @@
+<%@page import="com.dto.usersVO"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -82,9 +83,11 @@
 				href="#">Link3</a>
 		</div>
 	</aside>
-	<!-- End of Side Menu -->
 	
 	<section>
+		<%
+			usersVO user = (usersVO)request.getAttribute("user");
+		%>
 		<div class="container-fluid">
 			<br>
 			<div class="row">
@@ -94,8 +97,8 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th colspan="2"><input type="hidden" value="addUser"
-										name="cmd">유저 추가하기</th>
+									<th colspan="2"><input type="hidden" value="updateUser"
+										name="cmd">유저 수정하기</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -104,7 +107,7 @@
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control"
-												placeholder="Enter ID" name="userid">
+												value="<%=user.getId() %>" name="userid">
 										</div>
 									</td>
 								</tr>
@@ -113,7 +116,7 @@
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control"
-												placeholder="Enter Name" name="userName">
+												value="<%=user.getName() %>" name="userName">
 										</div>
 									</td>
 								</tr>
@@ -122,7 +125,7 @@
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control"
-												placeholder="Enter Position" name="position">
+												value="<%=user.getPosition() %>" name="position">
 										</div>
 									</td>
 								</tr>
@@ -131,7 +134,7 @@
 									<td>
 										<div class="form-group">
 											<input type="email" class="form-control"
-												placeholder="Enter Email" name="email">
+												value="<%=user.getEmail() %>" name="email">
 										</div>
 									</td>
 								</tr>
@@ -139,8 +142,9 @@
 						</table>
 
 						<div class="float-right">
-							<button class="btn btn-primary" type="submit">추가하기</button>
+							<button class="btn btn-primary" type="submit">수정하기</button>
 							<button class="btn btn-primary" type="reset">초기화</button>
+							<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
 						</div>
 					</form>
 				</div>

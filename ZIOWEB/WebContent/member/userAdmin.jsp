@@ -77,12 +77,18 @@
 	</nav>
 	<!-- End of Navigation -->
 
-	<aside class="bg-dark"style="float: left;width: 20%; height: 80%">
-		<a href="#">Link1</a> <br> <a href="#">Link2</a> <br> <a
-			href="#">Link3</a>
+	<!-- Side Menu -->
+	<aside class="bg-dark">
+		<div class="container-fluid">
+			<a href="#">Link1</a> <br> <a href="#">Link2</a> <br> <a
+				href="#">Link3</a>
+		</div>
 	</aside>
-	<section style="width: 80%; float: left">
-			<br>
+
+	<br>
+	<!-- End of Side bar -->
+	<section>
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-7">
@@ -106,7 +112,7 @@
 									for (usersVO u : list) {
 							%>
 							<tr>
-								<td><%=u.getId()%></td>
+								<td><a href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=u.getId()%>"><%=u.getId()%></a></td>
 								<td><%=u.getName()%></td>
 								<td><%=u.getPosition()%></td>
 								<td><%=u.getEmail()%></td>
@@ -129,8 +135,8 @@
 							int lastPage = (int) request.getAttribute("lastPage");
 							String keyword = request.getParameter("keyword");
 							String dataType = request.getParameter("dataType");
-							int startPage = (currpage - 1) / 10 + 1;
-							int endPage = startPage + 9;
+							int startPage = (currpage - 1) / 3 *3 + 1;
+							int endPage = startPage + 2;
 							if (endPage > lastPage) {
 								endPage = lastPage;
 							}
@@ -177,7 +183,7 @@
 							} //end of for
 							if (currpage != lastPage) {
 						%>
-						<li class="page-item"><a class="page-link" href="#">Next</a></li>
+						<li class="page-item"><a class="page-link" href="/ZIOWEB/Factory?cmd=useradmin&page=<%=currpage + 1%>">Next</a></li>
 						<%
 							}
 						%>
@@ -200,8 +206,9 @@
 					<a class="btn btn-primary float-right"
 						href="/ZIOWEB/Factory?cmd=addUserForm">회원추가</a>
 				</div>
-				<div class="col-sm-3"></div>
+				<div class="col-sm-4"></div>
 			</div>
+		</div>
 	</section>
 	<footer>aa</footer>
 </body>
