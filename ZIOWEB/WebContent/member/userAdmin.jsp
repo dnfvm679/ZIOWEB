@@ -21,7 +21,7 @@
 <body>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<!-- Brand/logo -->
-		<a class="navbar-brand" href="#">ZIONEX</a>
+		<a class="navbar-brand" href="/ZIOWEB/Factory?cmd=main">ZIONEX</a>
 
 		<!-- Toggler/collapsibe Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -79,14 +79,20 @@
 
 	<!-- Side Menu -->
 	<aside class="bg-dark">
-		<div class="container-fluid">
-			<a href="#">Link1</a> <br> <a href="#">Link2</a> <br> <a
-				href="#">Link3</a>
+		<%
+			if (session.getAttribute("userid") != null) {
+				String userid = (String) session.getAttribute("userid");
+		%>
+		<div><%=userid%>님이 로그인 되었습니다.
 		</div>
+		<br>
+		<%
+			}
+		%>
+		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br> <br>
+		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
 	</aside>
-
-	<br>
-	<!-- End of Side bar -->
+	<!-- End of SideMenu -->
 	<section>
 		<div class="container-fluid">
 			<div class="row">

@@ -88,7 +88,7 @@
 			}
 		%>
 		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br> <br>
-		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
+		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a><br><br>
 	</aside>
 	<!-- End of SideMenu -->
 	<section>

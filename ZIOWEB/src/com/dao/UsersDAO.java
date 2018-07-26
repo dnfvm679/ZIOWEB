@@ -102,6 +102,7 @@ public class UsersDAO {
 			pstmt.setString(3, user.getPosition());
 			pstmt.setString(4, user.getEmail());
 			pstmt.executeUpdate();
+			log.info("=====Create New User : "+user.getId());
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -215,6 +216,7 @@ public class UsersDAO {
 			pstmt.setString(3, user.getEmail());
 			pstmt.setString(4, user.getId());
 			pstmt.executeUpdate();
+			log.info("=====Update "+user.getId()+"'s info");
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -229,6 +231,7 @@ public class UsersDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			pstmt.executeUpdate();
+			log.info("=====Delete User : "+userid);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

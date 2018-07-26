@@ -41,7 +41,7 @@ public class ActionFactory {
 		case "loginform":
 			action = new LoginFormAction(); // LoginPage
 			break;
-		case "loginAction":
+		case "loginAction": // Execute Login
 			action = new LoginAction();
 			break;
 		case "logout": // Log out

@@ -20,7 +20,6 @@ public class BoardDAO {
 	}
 
 	public ArrayList<BoardVO> getBoards(int page) {
-		log.info("=========Method Name : getBoards");
 		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
 		String sql = "SELECT ROWNUM, B.* " + "FROM " + "( " + "SELECT * FROM BOARD WHERE USED='Y' "
 				+ "ORDER BY BOARDNUM DESC) B " + "WHERE ROWNUM < ?";
