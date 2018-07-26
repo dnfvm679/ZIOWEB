@@ -3,13 +3,13 @@ package com.controller;
 import com.action.Action;
 import com.action.BackAction;
 import com.action.MainAction;
-import com.action.board.DeleteIssueAction;
-import com.action.board.GetBoardListAction;
-import com.action.board.UpdateIssueAction;
-import com.action.board.UpdateIssueForm;
-import com.action.board.ViewBoardAction;
-import com.action.board.WriteIssueAction;
-import com.action.board.WriteIssueForm;
+import com.action.board.DeleteRequestAction;
+import com.action.board.GetRequestListAction;
+import com.action.board.UpdateRequestAction;
+import com.action.board.UpdateRequestForm;
+import com.action.board.ViewRequestAction;
+import com.action.board.WriteRequestAction;
+import com.action.board.WriteRequestForm;
 import com.action.member.AddUserAction;
 import com.action.member.AddUserForm;
 import com.action.member.DeleteUserAction;
@@ -19,7 +19,7 @@ import com.action.member.LogoutAction;
 import com.action.member.SearchUserAction;
 import com.action.member.UpdateUserAction;
 import com.action.member.UpdateUserForm;
-import com.action.member.UserAdminForm;
+import com.action.member.UserManagementForm;
 import com.action.member.ViewUserAction;
 
 public class ActionFactory {
@@ -47,8 +47,8 @@ public class ActionFactory {
 		case "logout": // Log out
 			action = new LogoutAction();
 			break;
-		case "useradmin": // User Management
-			action = new UserAdminForm();
+		case "userManagement": // User Management
+			action = new UserManagementForm();
 			break;
 		case "addUser": // Create New user
 			action = new AddUserAction();
@@ -74,26 +74,26 @@ public class ActionFactory {
 		case "back": // go to previous page
 			action = new BackAction();
 			break;
-		case "getBoardList": // get Board List
-			action = new GetBoardListAction();
+		case "getRequestList": // get Request List
+			action = new GetRequestListAction();
 			break;
-		case "writeIssueForm": // go to Insert Form about new Issue
-			action = new WriteIssueForm();
+		case "writeRequestForm": // go to Insert Form about new Request
+			action = new WriteRequestForm();
 			break;
-		case "writeIssue": // write Action for new Issue
-			action = new WriteIssueAction();
+		case "writeRequest": // write Action for new Request
+			action = new WriteRequestAction();
 			break;
-		case "viewBoard": // Show Detail about specific issue
-			action = new ViewBoardAction();
+		case "viewRequest": // Show Detail about specific Request
+			action = new ViewRequestAction();
 			break;
-		case "updateIssueForm": // insert form for update
-			action = new UpdateIssueForm();
+		case "updateRequestForm": // insert form for update
+			action = new UpdateRequestForm();
 			break;
-		case "updateIssue": // Update Issue
-			action = new UpdateIssueAction();
+		case "updateRequest": // Update Request
+			action = new UpdateRequestAction();
 			break;
-		case "deleteIssue": // Issue delete Action
-			action = new DeleteIssueAction();
+		case "deleteRequest": // Request delete Action
+			action = new DeleteRequestAction();
 			break;
 		default:
 			break;

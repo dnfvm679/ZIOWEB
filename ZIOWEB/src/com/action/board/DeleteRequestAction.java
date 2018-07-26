@@ -8,15 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.action.Action;
-import com.dao.BoardDAO;
+import com.dao.RequestDAO;
 import com.dto.BoardVO;
 
-public class DeleteIssueAction implements Action {
+public class DeleteRequestAction implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "Factory?cmd=getBoardList&page=1";
 
-		BoardDAO boarddao = new BoardDAO();
+		RequestDAO boarddao = new RequestDAO();
 		if (boarddao.deleteIssue(Integer.parseInt(request.getParameter("boardnum")))) {
 			response.sendRedirect(url);
 		} else {

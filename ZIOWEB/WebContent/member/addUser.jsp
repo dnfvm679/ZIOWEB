@@ -1,3 +1,5 @@
+<%@page import="com.dto.CompanyVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -108,11 +110,34 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>아이디</td>
+									<th colspan="2">필수정보</th>
+								</tr>
+								<tr>
+									<td>회사ID</td>
+									<td>
+										<div class="form-group">
+											<select class="form-control" name="company_id">
+												<%
+													if (request.getAttribute("company") != null) {
+														ArrayList<CompanyVO> list = (ArrayList<CompanyVO>) request.getAttribute("company");
+														for (CompanyVO c : list) {
+												%>
+												<option value="<%=c.getId()%>"><%=c.getName()%></option>
+												<%
+													}
+													}
+												%>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>ID</td>
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control"
-												placeholder="Enter ID" name="userid">
+												value="<%="USER_" + (String) request.getAttribute("userid")%>"
+												placeholder="Enter ID" name="id" readonly="readonly">
 										</div>
 									</td>
 								</tr>
@@ -120,17 +145,49 @@
 									<td>이름</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
-												placeholder="Enter Name" name="userName">
+											<input type="text" class="form-control" maxlength="50"
+												placeholder="Enter Name" name="name" id="name" required>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td>직책</td>
+									<td>직급</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
-												placeholder="Enter Position" name="position">
+											<input type="text" class="form-control" maxlength="50"
+												placeholder="Enter Position" name="position" required>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan=2>부가정보</th>
+								</tr>
+								<tr>
+									<td>부서</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="30"
+												placeholder="Enter team" name="team">
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>전화번호</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="15"
+												placeholder="Enter Tel" name="tel">
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>휴대번호</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="15"
+												placeholder="Enter Phone" name="phone">
 										</div>
 									</td>
 								</tr>
@@ -138,8 +195,17 @@
 									<td>Email</td>
 									<td>
 										<div class="form-group">
-											<input type="email" class="form-control"
+											<input type="email" class="form-control" maxlength="50"
 												placeholder="Enter Email" name="email">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>주소</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="250"
+												placeholder="Enter Address" name="address">
 										</div>
 									</td>
 								</tr>

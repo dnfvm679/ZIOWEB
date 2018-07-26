@@ -1,3 +1,5 @@
+<%@page import="java.util.Properties"%>
+<%@page import="com.util.PropertyManager"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -60,7 +62,7 @@
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
 						<a class="dropdown-item"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
+							href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a>
 						<%
 							}
 						%>
@@ -87,13 +89,18 @@
 		<%
 			}
 		%>
-		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br> <br>
+		<a href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a> <br> <br>
 		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a><br><br>
 	</aside>
 	<!-- End of SideMenu -->
+	<%
+		PropertyManager prom = PropertyManager.getInstance();
+		Properties pro = prom.getProperties();
+		String value = pro.getProperty("hello");
+	%>
 	<section>
 		<div class="container-fluid">
-			<h3>Brand /</h3>
+			<h3>Brand / <%=value %></h3>
 			<p>The .navbar-brand class is used to highlight the
 				brand/logo/project name of your page.</p>
 		</div>

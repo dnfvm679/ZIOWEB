@@ -83,7 +83,7 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th colspan="2"><input type="hidden" value="loginAction"
+								<th colspan="2"><input type="hidden" value="loginAction" 
 									name="cmd"> 로그인</th>
 							</tr>
 						</thead>
@@ -92,7 +92,7 @@
 								<td>아이디</td>
 								<td>
 									<div class="form-group">
-										<input type="text" class="form-control" placeholder="Enter ID"
+										<input type="text" class="form-control" placeholder="Enter ID" maxlength="50"
 											name="userid">
 									</div>
 								</td>
@@ -101,7 +101,7 @@
 								<td>비밀번호</td>
 								<td>
 									<div class="form-group">
-										<input type="password" class="form-control"
+										<input type="password" class="form-control" maxlength="50"
 											placeholder="Enter Password" name="userpw">
 									</div>
 								</td>

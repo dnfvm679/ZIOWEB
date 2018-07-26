@@ -17,10 +17,17 @@ public class UpdateUserAction implements Action {
 		String url = "Factory?cmd=viewUser&userid=" + request.getParameter("userid");
 		UsersDAO usersdao = new UsersDAO();
 		UserVO user = new UserVO();
-		user.setId(request.getParameter("userid"));
-		user.setName(request.getParameter("userName"));
-		user.setEmail(request.getParameter("email"));
+		user.setCompany_id(request.getParameter("company_id"));
+		user.setId(request.getParameter("id"));
+		user.setName(request.getParameter("name"));
+		System.out.println(request.getParameter("position"));
 		user.setPosition(request.getParameter("position"));
+		user.setTeam(request.getParameter("team"));
+		user.setTel(request.getParameter("tel"));
+		user.setPhone(request.getParameter("phone"));
+		user.setEmail(request.getParameter("email"));
+		user.setAddress(request.getParameter("address"));
+		System.out.println(request.getParameter("name"));
 		if (usersdao.updateUser(user)) {
 			response.sendRedirect(url);
 		} else {

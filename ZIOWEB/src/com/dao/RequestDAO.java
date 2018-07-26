@@ -8,21 +8,22 @@ import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import com.dto.BoardVO;
+import com.dto.RequestVO;
 import com.util.DBManager;
 
-public class BoardDAO {
+public class RequestDAO {
 	private Logger log = Logger.getLogger(this.getClass());
 	Connection conn = null;
 
-	public BoardDAO() {
+	public RequestDAO() {
 		DBManager dbm = DBManager.getInstance();
 		conn = dbm.getConn();
 	}
 
-	public ArrayList<BoardVO> getBoards(int page) {
-		ArrayList<BoardVO> list = new ArrayList<BoardVO>();
-		String sql = "SELECT ROWNUM, B.* " + "FROM " + "( " + "SELECT * FROM BOARD WHERE USED='Y' "
-				+ "ORDER BY BOARDNUM DESC) B " + "WHERE ROWNUM < ?";
+	
+	public ArrayList<RequestVO> getRequest(int page) {
+		ArrayList<RequestVO> list = new ArrayList<RequestVO>();
+		String sql = "SELECT ROWNUM, B.*  FROM  (SELECT * FROM TBL_REQUEST_INFO WHERE USE_YN='Y' ORDER BY ID) B WHERE ROWNUM < ?";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -35,14 +36,14 @@ public class BoardDAO {
 			if (rs.next()) {
 				do {
 					if (rs.getInt("ROWNUM") >= startNum && rs.getInt("ROWNUM") <= endNum) {
-						BoardVO board = new BoardVO();
-						board.setBoardnum(rs.getInt("BOARDNUM"));
-						board.setTitle(rs.getString("title"));
-						board.setContent(rs.getString("content"));
-						board.setWriter(rs.getString("writer"));
-						board.setCreatedate(rs.getDate("createdate"));
-						board.setStatus(rs.getString("status"));
-						list.add(board);
+						RequestVO request = new RequestVO();
+						request.setId(rs.getString("id"));
+						request.setTitle(rs.getString("title"));
+						request.setContent(rs.getString("content"));
+						request.setUser_id(rs.getString("user_id"));
+						request.setRequest_date(rs.getDate("request_date"));
+						request.setProcess_group_id(rs.getString("process_group_id"));
+						list.add(request);
 					}
 				} while (rs.next());
 				return list;
@@ -50,12 +51,14 @@ public class BoardDAO {
 				return null;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
 			return null;
 		}
 	} // End of getBoards
 
 	public int totalBoard() { // Get User list
-		String sql = "SELECT COUNT(*) FROM BOARD WHERE USED='Y'";
+		String sql = "SELECT COUNT(*) FROM TBL_REQUEST_INFO WHERE USE_YN='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {

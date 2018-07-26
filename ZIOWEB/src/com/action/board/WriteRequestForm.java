@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.action.Action;
 
-public class WriteIssueForm implements Action {
+public class WriteRequestForm implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url="issue/writeIssue.jsp";

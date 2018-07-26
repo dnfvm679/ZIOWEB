@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.action.Action;
-import com.dao.BoardDAO;
+import com.dao.RequestDAO;
 import com.dto.BoardVO;
 
-public class UpdateIssueForm implements Action {
+public class UpdateRequestForm implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url="issue/updateIssue.jsp";
-		BoardDAO boarddao = new BoardDAO();
+		RequestDAO boarddao = new RequestDAO();
 		BoardVO board = boarddao.getBoard(Integer.parseInt(request.getParameter("boardnum")));
 		board.setBoardnum(Integer.parseInt(request.getParameter("boardnum")));
 		request.setAttribute("board", board);

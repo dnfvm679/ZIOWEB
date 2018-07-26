@@ -109,8 +109,13 @@
 							</tr>
 						</thead>
 						<tbody>
+						
 							<tr>
-								<td class="label">아이디</td>
+								<td class="label">회사ID</td>
+								<td><%=user.getCompany_id() %></td>
+							</tr>
+							<tr>
+								<td class="label">사용자ID</td>
 								<td><%=user.getId() %></td>
 							</tr>
 							<tr>
@@ -118,8 +123,24 @@
 								<td><%=user.getName() %></td>
 							</tr>
 							<tr>
-								<td class="label">직책</td>
+								<td class="label">직급</td>
 								<td><%=user.getPosition() %></td>
+							</tr>
+							<tr>
+								<td class="label">부서</td>
+								<td><%=user.getTeam() %></td>
+							</tr>
+							<tr>
+								<td class="label">주소</td>
+								<td><%=user.getAddress() %></td>
+							</tr>
+							<tr>
+								<td class="label">전화번호</td>
+								<td><%=user.getTel() %></td>
+							</tr>
+							<tr>
+								<td class="label">휴대번호</td>
+								<td><%=user.getPhone() %></td>
 							</tr>
 							<tr>
 								<td class="label">Email</td>

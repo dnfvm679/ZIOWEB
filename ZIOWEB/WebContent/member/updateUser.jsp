@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.dto.CompanyVO"%>
 <%@page import="com.dto.UserVO"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -88,14 +90,14 @@
 		<%
 			}
 		%>
-		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br> <br>
-		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
+		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br>
+		<br> <a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
 	</aside>
 	<!-- End of SideMenu -->
-	
+
 	<section>
 		<%
-			UserVO user = (UserVO)request.getAttribute("user");
+			UserVO user = (UserVO) request.getAttribute("user");
 		%>
 		<div class="container-fluid">
 			<br>
@@ -112,11 +114,40 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>아이디</td>
+									<th colspan=2>필수정보</th>
+								</tr>
+								<tr>
+									<td>회사ID</td>
+									<td>
+										<div class="form-group">
+											<select class="form-control" name="company_id">
+												<%
+													if (request.getAttribute("company") != null) {
+														ArrayList<CompanyVO> list = (ArrayList<CompanyVO>) request.getAttribute("company");
+														for (CompanyVO c : list) {
+															if (c.getId().equals(user.getCompany_id())) {
+												%>
+												<option value="<%=c.getId()%>" selected="selected"><%=c.getName()%></option>
+												<%
+													} else {
+												%>
+												<option value="<%=c.getId()%>"><%=c.getName()%></option>
+												<%
+													}
+														}
+													}
+												%>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>ID</td>
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control"
-												value="<%=user.getId() %>" name="userid">
+												value="<%=user.getId()%>" placeholder="Enter ID" name="id"
+												readonly="readonly">
 										</div>
 									</td>
 								</tr>
@@ -124,17 +155,49 @@
 									<td>이름</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getName() %>" name="userName">
+											<input type="text" class="form-control" maxlength="50"
+												value="<%=user.getName()%>" name="name" id="name" required>
 										</div>
 									</td>
 								</tr>
 								<tr>
-									<td>직책</td>
+									<th colspan=2>부가정보</th>
+								</tr>
+								<tr>
+									<td>직급</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
-												value="<%=user.getPosition() %>" name="position">
+											<input type="text" class="form-control" maxlength="50"
+												value="<%=user.getPosition()%>" name="position" required>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>부서</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="30"
+												value="<%=user.getTeam()%>" name="team">
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>전화번호</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="15"
+												value="<%=user.getTel()%>" name="tel">
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>휴대번호</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="15"
+												value="<%=user.getPhone()%>" name="phone">
 										</div>
 									</td>
 								</tr>
@@ -142,8 +205,17 @@
 									<td>Email</td>
 									<td>
 										<div class="form-group">
-											<input type="email" class="form-control"
-												value="<%=user.getEmail() %>" name="email">
+											<input type="email" class="form-control" maxlength="50"
+												value="<%=user.getEmail()%>" name="email">
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>주소</td>
+									<td>
+										<div class="form-group">
+											<input type="text" class="form-control" maxlength="250"
+												value="<%=user.getAddress()%>" name="address">
 										</div>
 									</td>
 								</tr>

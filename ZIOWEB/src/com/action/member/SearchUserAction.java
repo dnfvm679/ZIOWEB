@@ -15,7 +15,7 @@ import com.dto.UserVO;
 public class SearchUserAction implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "member/userAdmin.jsp";
+		String url = "member/userManagement.jsp";
 		UsersDAO usersdao = new UsersDAO();
 		ArrayList<UserVO> list = usersdao.getUsers(request.getParameter("dataType"), request.getParameter("keyword"),
 				Integer.parseInt(request.getParameter("page")));

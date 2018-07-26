@@ -117,7 +117,7 @@
 									<td>제목</td>
 									<td>
 										<div class="form-group">
-											<input type="text" class="form-control"
+											<input type="text" class="form-control" maxlength="100"
 												value="<%=board.getTitle()%>" name="title">
 										</div>
 									</td>
@@ -135,7 +135,7 @@
 									<td>내용</td>
 									<td>
 										<div class="form-group">
-											<textarea id="issuewrite" class="form-control" rows="1"
+											<textarea id="issuewrite" class="form-control" rows="1" maxlength="2048"
 												cols="1" name="content"><%=board.getContent()%></textarea>
 										</div>
 									</td>

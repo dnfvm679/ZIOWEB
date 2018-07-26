@@ -23,11 +23,12 @@ public class Factory extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		doProccess(request, response);
 	}
 	
 	protected void doProccess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		String cmd = request.getParameter("cmd");
 		ActionFactory af = ActionFactory.getInstance();
 		Action action = af.getAction(cmd);
