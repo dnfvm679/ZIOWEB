@@ -68,7 +68,6 @@
 						%>
 						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=logout">로그아웃</a>
 					</div></li>
-
 			</ul>
 			<%
 				}
@@ -79,18 +78,29 @@
 
 	<!-- Side Menu -->
 	<aside class="bg-dark">
-		<%
-			if (session.getAttribute("userid") != null) {
-				String userid = (String) session.getAttribute("userid");
-		%>
-		<div><%=userid%>님이 로그인 되었습니다.
-		</div>
-		<br>
-		<%
-			}
-		%>
-		<a href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a> <br> <br>
-		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a><br><br>
+		<ul class="nav flex-column">
+			<%
+				if (session.getAttribute("userid") != null) {
+					String userid = (String) session.getAttribute("userid");
+			%>
+			<li class="nav-item"><%=userid%>님이 로그인 되었습니다.</li>
+			<%
+				if (userid.equals("ADMIN")) {
+			%>
+			<li class="nav-itme"><a class="nav-item"
+				href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a></li>
+			<li class="nav-itme"><a class="nav-item"
+				href="/ZIOWEB/Factory?cmd=userManagement&page=1">고객사관리</a></li>
+			<%
+				}
+				}
+			%>
+			<li class="nav-item"><a class="nav-link"
+				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a></li>
+			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+			</li>
+		</ul>
+
 	</aside>
 	<!-- End of SideMenu -->
 	<%
@@ -100,7 +110,9 @@
 	%>
 	<section>
 		<div class="container-fluid">
-			<h3>Brand / <%=value %></h3>
+			<h3>
+				Brand /
+				<%=value%></h3>
 			<p>The .navbar-brand class is used to highlight the
 				brand/logo/project name of your page.</p>
 		</div>

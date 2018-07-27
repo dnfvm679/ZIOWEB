@@ -1,6 +1,5 @@
 <%@page import="com.dto.RequestVO"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.dto.BoardVO"%>
 <%@page import="com.dto.UserVO"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -112,7 +111,7 @@
 								<td>제목</td>
 								<td>작성자</td>
 								<td>작성일자</td>
-								<td>처리분류</td>
+								<td>처리상태</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -122,11 +121,11 @@
 									for (RequestVO r : list) {
 							%>
 							<tr>
-								<td><a href="#"><%=r.getId()%></a></td>
-								<td><%=r.getTitle()%></a></td>
+								<td><a href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>"><%=r.getReq_index()%></a></td>
+								<td><a href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>"><%=r.getTitle()%></a></td>
 								<td><%=r.getUser_id()%></td>
 								<td><%=r.getRequest_date()%></td>
-								<td><%=r.getProcess_group_id()%></td>
+								<td><%=r.getProcess_state_id() %></td>
 							</tr>
 							<%
 								}

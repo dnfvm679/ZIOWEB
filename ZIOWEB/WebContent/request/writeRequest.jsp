@@ -1,3 +1,7 @@
+<%@page import="com.dto.CommonCodeVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -99,7 +103,7 @@
 		<%
 			}
 		%>
-		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br>
+		<a href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a> <br>
 		<br> <a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
 	</aside>
 	<!-- End of SideMenu -->
@@ -114,8 +118,15 @@
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th colspan="2"><input type="hidden" value="writeIssue"
-										name="cmd">글 작성하기</th>
+									<th colspan="2"><input type="hidden" value="writeRequest"
+										name="cmd"> <%
+ 	String company_id = (String) request.getAttribute("company_id");
+ 	String board_num = (String) request.getAttribute("board_num");
+ 	Date date = new Date();
+ 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+ 	String request_id = "R_" + company_id + "_" + sdf.format(date) + "_" + board_num;
+ %> <input type="hidden" class="form-control" value="<%=request_id%>"
+										placeholder="Enter Title" name="id" readonly> 요청 작성하기</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -133,7 +144,7 @@
 									<td>
 										<div class="form-group">
 											<input type="text" class="form-control" name="writer"
-												value=<%=session.getAttribute("userid")%>
+												value=<%=session.getAttribute("userName")%>
 												readonly="readonly">
 										</div>
 									</td>
@@ -142,8 +153,9 @@
 									<td>내용</td>
 									<td>
 										<div class="form-group">
-											<textarea id="issuewrite" class="form-control" rows="1" maxlength="2048"
-												cols="1" name="content" placeholder="Enter Content"></textarea>
+											<textarea id="requestwrite" class="form-control" rows="1"
+												maxlength="2048" cols="1" name="content"
+												placeholder="Enter Content"></textarea>
 										</div>
 									</td>
 								</tr>

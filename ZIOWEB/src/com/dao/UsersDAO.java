@@ -20,8 +20,8 @@ public class UsersDAO {
 		conn = dbm.getConn();
 	}
 
-	public boolean Login(String userid, String userpw) { // Login Action
-		String sql = "SELECT PW FROM TBL_USER_MASTER WHERE ID=? AND USE_YN='Y'";
+	public String Login(String userid, String userpw) { // Login Action
+		String sql = "SELECT PW,NAME FROM TBL_USER_MASTER WHERE ID=? AND USE_YN='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -31,15 +31,15 @@ public class UsersDAO {
 			if (rs.next()) {
 				if (rs.getString("PW").equals(userpw)) {
 					log.info("=====Login : " + userid);
-					return true;
+					return rs.getString("name");
 				} else
-					return false;
+					return null;
 			} else {
-				return false;
+				return null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	} // End of Login
 
@@ -98,7 +98,7 @@ public class UsersDAO {
 		// TBL_USER_MASTER Column order
 		// ID COMPANY_ID NAME POSITION TEAM TEL PHONE EMAIL ADDRESS NAMECARD ETC USE_YN
 		// PW
-		String sql = "INSERT INTO TBL_USER_MASTER VALUES(?,?,?,?,?,?,?,?,?,null,null,'Y','ZIONEX0000')";
+		String sql = "INSERT INTO TBL_USER_MASTER VALUES(?,'ZIONEX0000',?,?,?,?,?,?,?,?,null,null,'Y')";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -306,6 +306,26 @@ public class UsersDAO {
 					list.add(company);
 				} while (rs.next());
 				return list;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			log.info(e);
+			return null;
+		}
+	}
+	
+	public String getCompanyID(String userid) { // Get All Client Company list
+		String sql = "SELECT COMPANY_ID FROM TBL_USER_MASTER WHERE ID=? AND USE_YN='Y'";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+					String company_id = rs.getString("company_id");
+					return company_id;
 			} else {
 				return null;
 			}

@@ -3,13 +3,6 @@ package com.controller;
 import com.action.Action;
 import com.action.BackAction;
 import com.action.MainAction;
-import com.action.board.DeleteRequestAction;
-import com.action.board.GetRequestListAction;
-import com.action.board.UpdateRequestAction;
-import com.action.board.UpdateRequestForm;
-import com.action.board.ViewRequestAction;
-import com.action.board.WriteRequestAction;
-import com.action.board.WriteRequestForm;
 import com.action.member.AddUserAction;
 import com.action.member.AddUserForm;
 import com.action.member.DeleteUserAction;
@@ -21,6 +14,13 @@ import com.action.member.UpdateUserAction;
 import com.action.member.UpdateUserForm;
 import com.action.member.UserManagementForm;
 import com.action.member.ViewUserAction;
+import com.action.request.DeleteRequestAction;
+import com.action.request.GetRequestListAction;
+import com.action.request.UpdateRequestAction;
+import com.action.request.UpdateRequestForm;
+import com.action.request.ViewRequestAction;
+import com.action.request.WriteRequestAction;
+import com.action.request.WriteRequestForm;
 
 public class ActionFactory {
 	private static ActionFactory af = new ActionFactory();

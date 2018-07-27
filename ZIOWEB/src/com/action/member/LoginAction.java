@@ -17,9 +17,10 @@ public class LoginAction implements Action {
 		String userpw = request.getParameter("userpw");
 		String url = "index.jsp";
 		UsersDAO usersdao = new UsersDAO();
-		boolean result = usersdao.Login(userid, userpw);
-		if (result) {
+		String name = usersdao.Login(userid, userpw);
+		if (name != null) {
 			request.getSession().setAttribute("userid", userid);
+			request.getSession().setAttribute("userName", name);
 			response.sendRedirect(url);
 		} else {
 			PrintWriter out = response.getWriter();

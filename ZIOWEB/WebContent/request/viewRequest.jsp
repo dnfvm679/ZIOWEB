@@ -1,4 +1,4 @@
-<%@page import="com.dto.BoardVO"%>
+<%@page import="com.dto.RequestVO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.util.DBManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -89,14 +89,14 @@
 		<%
 			}
 		%>
-		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br> <br>
-		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
+		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br>
+		<br> <a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
 	</aside>
 	<!-- End of SideMenu -->
 
 	<section>
 		<%
-			BoardVO board = (BoardVO) request.getAttribute("board");
+			RequestVO requestvo = (RequestVO) request.getAttribute("requestvo");
 		%>
 		<div class="container-fluid">
 			<br>
@@ -106,27 +106,26 @@
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th colspan="2"><input type="hidden" value="writeIssue"
-									name="cmd">글 상세보기</th>
+								<th colspan="4">글 상세보기</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td class="tag">제목</td>
-								<td><%=board.getTitle()%></td>
+								<td class="tag" colspan="2">제목</td>
+								<td colspan="2"><%=requestvo.getTitle()%></td>
 							</tr>
 							<tr>
-								<td class="tag">작성자</td>
-								<td><%=board.getWriter()%></td>
+								<td class="tag" colspan="2">작성자</td>
+								<td colspan="2"><%=requestvo.getUser_id()%></td>
 							</tr>
 							<tr>
-								<td class="tag">작성일자</td>
-								<td><%=board.getCreatedate()%></td>
+								<td class="tag" colspan="2">작성일자</td>
+								<td colspan="2"><%=requestvo.getRequest_date()%></td>
 							</tr>
 							<tr>
-								<td class="tag">내용</td>
-								<td>
-									<div><%=board.getContent()%></div>
+								<td class="tag" colspan="2">내용</td>
+								<td colspan="2">
+									<div><%=requestvo.getContent()%></div>
 								</td>
 							</tr>
 						</tbody>
@@ -134,12 +133,12 @@
 
 					<div class="float-right">
 						<%
-							if (!board.getStatus().equals("C") && board.getWriter().equals((String)session.getAttribute("userid"))) {
+							if (requestvo.getUser_id().equals((String)session.getAttribute("userName"))) {
 						%>
 						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=updateIssueForm&boardnum=<%=board.getBoardnum()%>">수정하기</a>
+							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>">수정하기</a>
 						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=deleteIssue&boardnum=<%=board.getBoardnum()%>">삭제하기</a>
+							href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
 						<%
 							}
 						%>
