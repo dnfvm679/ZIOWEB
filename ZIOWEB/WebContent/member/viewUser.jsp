@@ -49,6 +49,7 @@
 			<%
 				} else {
 			%>
+
 			<!-- Member info -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown"><a
@@ -56,18 +57,18 @@
 					data-toggle="dropdown"> 내정보 </a>
 
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원정보</a>
+						<a class="dropdown-item"
+							href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=(String) session.getAttribute("userid")%>">회원정보</a>
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
 						<a class="dropdown-item"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
+							href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a>
 						<%
 							}
 						%>
 						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=logout">로그아웃</a>
 					</div></li>
-
 			</ul>
 			<%
 				}
@@ -78,24 +79,39 @@
 
 	<!-- Side Menu -->
 	<aside class="bg-dark">
-		<%
-			if (session.getAttribute("userid") != null) {
-				String userid = (String) session.getAttribute("userid");
-		%>
-		<div><%=userid%>님이 로그인 되었습니다.
-		</div>
-		<br>
-		<%
-			}
-		%>
-		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br> <br>
-		<a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
+		<ul class="nav flex-column">
+			<%
+				if (session.getAttribute("userid") != null) {
+					String userid = (String) session.getAttribute("userid");
+			%>
+			<li class="nav-item"><%=userid%>님이 로그인 되었습니다.</li>
+			<%
+				if (userid.equals("ADMIN")) {
+			%>
+			<li class="nav-itme"><a class="nav-item"
+				href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a></li>
+			<li class="nav-itme"><a class="nav-item"
+				href="/ZIOWEB/Factory?cmd=userManagement&page=1">고객사관리</a></li>
+			<%
+				}
+			%>
+			<li class="nav-item"><a class="nav-link"
+				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">나의 문의 사항</a></li>
+			<%
+				}
+			%>
+			<li class="nav-item"><a class="nav-link"
+				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a></li>
+			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+			</li>
+		</ul>
+
 	</aside>
 	<!-- End of SideMenu -->
 
 	<section>
 		<%
-			UserVO user = (UserVO)request.getAttribute("user");
+			UserVO user = (UserVO) request.getAttribute("user");
 		%>
 		<div class="container-fluid">
 			<br>
@@ -109,51 +125,58 @@
 							</tr>
 						</thead>
 						<tbody>
-						
+
 							<tr>
 								<td class="label">회사ID</td>
-								<td><%=user.getCompany_id() %></td>
+								<td><%=user.getCompany_id()%></td>
 							</tr>
 							<tr>
 								<td class="label">사용자ID</td>
-								<td><%=user.getId() %></td>
+								<td><%=user.getId()%></td>
 							</tr>
 							<tr>
 								<td class="label">이름</td>
-								<td><%=user.getName() %></td>
+								<td><%=user.getName()%></td>
 							</tr>
 							<tr>
 								<td class="label">직급</td>
-								<td><%=user.getPosition() %></td>
+								<td><%=user.getPosition()%></td>
 							</tr>
 							<tr>
 								<td class="label">부서</td>
-								<td><%=user.getTeam() %></td>
+								<td><%=user.getTeam()%></td>
 							</tr>
 							<tr>
 								<td class="label">주소</td>
-								<td><%=user.getAddress() %></td>
+								<td><%=user.getAddress()%></td>
 							</tr>
 							<tr>
 								<td class="label">전화번호</td>
-								<td><%=user.getTel() %></td>
+								<td><%=user.getTel()%></td>
 							</tr>
 							<tr>
 								<td class="label">휴대번호</td>
-								<td><%=user.getPhone() %></td>
+								<td><%=user.getPhone()%></td>
 							</tr>
 							<tr>
 								<td class="label">Email</td>
-								<td><%=user.getEmail() %></td>
+								<td><%=user.getEmail()%></td>
 							</tr>
 						</tbody>
 					</table>
 
 					<div class="float-right">
-						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=updateUserForm&userid=<%=user.getId() %>">수정하기</a>
-						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=deleteUser&userid=<%=user.getId() %>">삭제하기</a>
+						<%
+							if (session.getAttribute("userid").toString().equals("ADMIN")) {
+						%>
 						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
+							href="/ZIOWEB/Factory?cmd=updateUserForm&userid=<%=user.getId()%>">수정하기</a>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=deleteUser&userid=<%=user.getId()%>">삭제하기</a>
+						<%
+							}
+						%>
+						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
 					</div>
 				</div>
 				<div class="col-sm-4"></div>

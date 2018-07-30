@@ -1,3 +1,5 @@
+<%@page import="com.dto.CommonCodeVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.dto.RequestVO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.util.DBManager"%>
@@ -119,60 +121,152 @@
 			<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-7" style="text-align: center">
-					<form action="/ZIOWEB/Factory" method="post">
-					<input type="hidden" name="id" value="<%=requestvo.getId()%>">
-					<input type="hidden" name="cmd" value="updateRequest">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th colspan="2">글 상세보기</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="tag" >제목</td>
-									<td >
-										<div class="form-gruop">
-											<input class="form-control" name="title"
-												value="<%=requestvo.getTitle()%>">
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td class="tag" >작성자</td>
-									<td ><%=requestvo.getUser_id()%></td>
-								</tr>
-								<tr>
-									<td class="tag" >작성일자</td>
-									<td ><%=requestvo.getRequest_date()%></td>
-								</tr>
-								<tr>
-									<td class="tag" >내용</td>
-									<td >
-										<div class="form-group">
-											<textarea id="requestwrite" class="form-control" rows="1"
-												maxlength="2048" cols="1" name="content"
-												placeholder="Enter Content"><%=requestvo.getContent()%></textarea>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th colspan="4">글 상세보기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								if (session.getAttribute("userid") != null) {
+									if (session.getAttribute("userid").toString().equals("ADMIN")) {
+							%>
+							<tr>
+								<td class="tag" colspan="2">요청 ID</td>
+								<td colspan="2"><%=requestvo.getId()%></td>
+							</tr>
+							<%
+								}
+								}
+							%>
+							<tr>
+								<td class="tag" colspan="2">제목</td>
+								<td colspan="2"><%=requestvo.getTitle()%></td>
+							</tr>
+							<tr>
+								<td class="tag" colspan="2">작성자</td>
+								<td colspan="2"><%=requestvo.getUser_name()%></td>
+							</tr>
+							<tr>
+								<td class="tag" colspan="2">작성일자</td>
+								<td colspan="2"><%=requestvo.getRequest_date()%></td>
+							</tr>
+							<tr>
+								<td class="tag" colspan="2">내용</td>
+								<td colspan="2">
+									<div><%=requestvo.getContent()%></div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
 					<div class="float-right">
 						<%
 							if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))) {
 						%>
-						<button class="btn btn-primary" type="submit">수정하기</button>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>">수정하기</a>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
 						<%
 							}
 						%>
-						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
+
 					</div>
-					
+				</div>
+				<!-- End of Show request -->
+
+				<div class="col-sm-3">
+					<%
+						ArrayList<CommonCodeVO> list = (ArrayList<CommonCodeVO>) request.getAttribute("codelist");
+					%>
+					<form action="/ZIOWEB/Factory" method="post">
+						<input type="hidden" name="cmd" value="processChange"> <input
+							type="hidden" name="request_id" value="<%=requestvo.getId()%>">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th colspan="2">요청 상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="tag">처리 상태</td>
+									<td>
+										<div class="form-group">
+											<select class="form-control" name="process_state_id">
+												<%
+													for (CommonCodeVO c : list) {
+														if (c.getGroup_id().equals("PROCESS_STATE")) {
+												%>
+												<option value="<%=c.getId()%>"><%=c.getName()%></option>
+												<%
+													}
+													}
+												%>
+											</select>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="tag">처리 담당자ID</td>
+									<td>
+										<div class="form-group">
+											<input class="form-control" type="text" name="manager_id"
+												placeholder="담당자 ID를 입력해주세요">
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="tag">처리 분류</td>
+									<td>
+										<div class="form-group">
+											<select class="form-control" name="process_type_id">
+												<%
+													for (CommonCodeVO c : list) {
+														if (c.getGroup_id().equals("PROCESS_TYPE")) {
+												%>
+												<option value="<%=c.getId()%>"><%=c.getName()%></option>
+												<%
+													}
+													}
+												%>
+											</select>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="tag">처리 형태</td>
+									<td>
+										<div class="form-group">
+											<select class="form-control" name="process_form_id">
+												<%
+													for (CommonCodeVO c : list) {
+														if (c.getGroup_id().equals("PROCESS_FORM")) {
+												%>
+												<option value="<%=c.getId()%>"><%=c.getName()%></option>
+												<%
+													}
+													}
+												%>
+											</select>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button class="btn btn-primary" type="submit">처리상태변경</button>
+						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
 					</form>
 				</div>
-				<div class="col-sm-4"></div>
+				<!-- End of Process Change Table -->
+
+
+				<div class="col-sm-1"></div>
 			</div>
 		</div>
 	</section>

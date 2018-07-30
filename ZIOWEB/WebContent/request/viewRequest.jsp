@@ -50,6 +50,7 @@
 			<%
 				} else {
 			%>
+
 			<!-- Member info -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown"><a
@@ -57,18 +58,18 @@
 					data-toggle="dropdown"> 내정보 </a>
 
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원정보</a>
+						<a class="dropdown-item"
+							href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=(String) session.getAttribute("userid")%>">회원정보</a>
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
 						<a class="dropdown-item"
-							href="/ZIOWEB/Factory?cmd=useradmin&page=1">회원관리</a>
+							href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a>
 						<%
 							}
 						%>
 						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=logout">로그아웃</a>
 					</div></li>
-
 			</ul>
 			<%
 				}
@@ -79,18 +80,33 @@
 
 	<!-- Side Menu -->
 	<aside class="bg-dark">
-		<%
-			if (session.getAttribute("userid") != null) {
-				String userid = (String) session.getAttribute("userid");
-		%>
-		<div><%=userid%>님이 로그인 되었습니다.
-		</div>
-		<br>
-		<%
-			}
-		%>
-		<a href="/ZIOWEB/Factory?cmd=getBoardList&page=1">이슈게시판</a> <br>
-		<br> <a href="#">이슈게시판</a> <br> <br> <a href="#">이슈게시판</a>
+		<ul class="nav flex-column">
+			<%
+				if (session.getAttribute("userid") != null) {
+					String userid = (String) session.getAttribute("userid");
+			%>
+			<li class="nav-item"><%=userid%>님이 로그인 되었습니다.</li>
+			<%
+				if (userid.equals("ADMIN")) {
+			%>
+			<li class="nav-itme"><a class="nav-item"
+				href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a></li>
+			<li class="nav-itme"><a class="nav-item"
+				href="/ZIOWEB/Factory?cmd=userManagement&page=1">고객사관리</a></li>
+			<%
+				}
+			%>
+			<li class="nav-item"><a class="nav-link"
+				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">나의 문의 사항</a></li>
+			<%
+				}
+			%>
+			<li class="nav-item"><a class="nav-link"
+				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a></li>
+			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+			</li>
+		</ul>
+
 	</aside>
 	<!-- End of SideMenu -->
 
@@ -110,13 +126,45 @@
 							</tr>
 						</thead>
 						<tbody>
+							<%
+								if (session.getAttribute("userid") != null) {
+									if (session.getAttribute("userid").toString().equals("ADMIN")) {
+							%>
+							<tr>
+								<td class="tag" colspan="2">요청 ID</td>
+								<td colspan="2"><%=requestvo.getId()%></td>
+							</tr>
+							<%
+								}
+								}
+							%>
 							<tr>
 								<td class="tag" colspan="2">제목</td>
 								<td colspan="2"><%=requestvo.getTitle()%></td>
 							</tr>
 							<tr>
+								<td class="tag" colspan="2">처리상태</td>
+								<td colspan="2"><%=requestvo.getProcess_state_name()%></td>
+							</tr>
+							<%
+								if (!requestvo.getProcess_state_id().equals("S01")) {
+							%>
+							<tr>
+								<td class="tag" colspan="2">처리분류</td>
+								<td colspan="2"><%=requestvo.getProcess_type_name()%></td>
+							</tr>
+							<tr>
+								<td class="tag">처리담당자</td>
+								<td><%=requestvo.getManager_id()%></td>
+								<td class="tag">처리형태</td>
+								<td><%=requestvo.getProcess_form_name()%></td>
+							</tr>
+							<%
+								}
+							%>
+							<tr>
 								<td class="tag" colspan="2">작성자</td>
-								<td colspan="2"><%=requestvo.getUser_id()%></td>
+								<td colspan="2"><%=requestvo.getUser_name()%></td>
 							</tr>
 							<tr>
 								<td class="tag" colspan="2">작성일자</td>
@@ -133,13 +181,24 @@
 
 					<div class="float-right">
 						<%
-							if (requestvo.getUser_id().equals((String)session.getAttribute("userName"))) {
+							if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))) {
 						%>
 						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>">수정하기</a>
+							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>&state_name=<%=request.getParameter("state_name")%>">수정하기</a>
 						<a class="btn btn-primary"
 							href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
 						<%
+							}
+						%>
+
+						<%
+							if (session.getAttribute("userid") != null) {
+								if (session.getAttribute("userid").toString().equals("ADMIN")) {
+						%>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=processChangeForm&id=<%=requestvo.getId()%>">처리상태변경</a>
+						<%
+							}
 							}
 						%>
 						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>

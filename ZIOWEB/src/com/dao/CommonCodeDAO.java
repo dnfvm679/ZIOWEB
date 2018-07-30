@@ -44,4 +44,31 @@ public class CommonCodeDAO {
 		}
 		return null;
 	}
+	
+	public ArrayList<CommonCodeVO> getCommonCode() {
+		String sql = "SELECT * FROM TBL_COMMON_CODE";
+		ArrayList<CommonCodeVO> list = new ArrayList<CommonCodeVO>();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				do {
+					CommonCodeVO comm = new CommonCodeVO();
+					comm.setId(rs.getString("id"));
+					comm.setName(rs.getString("name"));
+					comm.setGroup_id(rs.getString("group_id"));
+					list.add(comm);
+				}while(rs.next());
+				return list;
+			}else {
+				return null;
+			}
+		} catch (Exception e) {
+			log.info(e);
+		}
+		return null;
+	}
+	
 }

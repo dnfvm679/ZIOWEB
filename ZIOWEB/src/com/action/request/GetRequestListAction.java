@@ -17,7 +17,12 @@ public class GetRequestListAction implements Action {
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "request/request.jsp";
 		RequestDAO requestdao = new RequestDAO();
-		ArrayList<RequestVO> list = requestdao.getRequestList(Integer.parseInt(request.getParameter("page")));
+		ArrayList<RequestVO> list = null;
+		if (request.getParameter("id") != null) {
+			list = requestdao.getRequestList(Integer.parseInt(request.getParameter("page")),request.getParameter("id").toString());
+		} else {
+			list = requestdao.getRequestList(Integer.parseInt(request.getParameter("page")));
+		}
 		int totalRequest = requestdao.totalRequest();
 		int lastPage = 0;
 		if (totalRequest % 10 == 0) {

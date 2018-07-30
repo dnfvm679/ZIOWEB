@@ -11,22 +11,23 @@ import com.action.Action;
 import com.dao.RequestDAO;
 import com.dto.RequestVO;
 
-public class UpdateRequestAction implements Action {
+public class ProcessChangeAction implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		String url = "Factory?cmd=viewRequest&id="+ request.getParameter("id")+"&state_name="+request.getParameter("state_name");
+		String url = "Factory?cmd=viewRequest&id=" + request.getParameter("request_id");
 		RequestVO requestvo = new RequestVO();
-		requestvo.setId(request.getParameter("id"));
-		requestvo.setTitle(request.getParameter("title"));
-		requestvo.setContent(request.getParameter("content"));
+		requestvo.setId(request.getParameter("request_id"));
+		requestvo.setProcess_form_id(request.getParameter("process_form_id"));
+		requestvo.setProcess_type_id(request.getParameter("process_type_id"));
+		requestvo.setProcess_state_id(request.getParameter("process_state_id"));
+		requestvo.setManager_id(request.getParameter("manager_id"));
 		RequestDAO requestdao = new RequestDAO();
-		if (requestdao.updateRequest(requestvo)) {
+		if(requestdao.updateProcess(requestvo)) {
 			response.sendRedirect(url);
-		} else {
+		}else {
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('Write Failed');");
+			out.println("alert('Process Update Failed');");
 			out.println("history.back();");
 			out.println("</script>");
 		}

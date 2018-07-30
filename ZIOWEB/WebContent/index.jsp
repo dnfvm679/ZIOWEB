@@ -50,6 +50,7 @@
 			<%
 				} else {
 			%>
+
 			<!-- Member info -->
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item dropdown"><a
@@ -57,7 +58,8 @@
 					data-toggle="dropdown"> 내정보 </a>
 
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=test">회원정보</a>
+						<a class="dropdown-item"
+							href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=(String) session.getAttribute("userid")%>">회원정보</a>
 						<%
 							if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
@@ -93,6 +95,10 @@
 				href="/ZIOWEB/Factory?cmd=userManagement&page=1">고객사관리</a></li>
 			<%
 				}
+			%>
+			<li class="nav-item"><a class="nav-link"
+				href="/ZIOWEB/Factory?cmd=getRequestList&page=1&id=<%=session.getAttribute("userid").toString() %>">나의 문의 사항</a></li>
+			<%
 				}
 			%>
 			<li class="nav-item"><a class="nav-link"

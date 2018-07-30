@@ -16,6 +16,8 @@ import com.action.member.UserManagementForm;
 import com.action.member.ViewUserAction;
 import com.action.request.DeleteRequestAction;
 import com.action.request.GetRequestListAction;
+import com.action.request.ProcessChangeAction;
+import com.action.request.ProcessChangeForm2;
 import com.action.request.UpdateRequestAction;
 import com.action.request.UpdateRequestForm;
 import com.action.request.ViewRequestAction;
@@ -94,6 +96,12 @@ public class ActionFactory {
 			break;
 		case "deleteRequest": // Request delete Action
 			action = new DeleteRequestAction();
+			break;
+		case "processChangeForm":
+			action = new ProcessChangeForm2();
+			break;
+		case "processChange":
+			action = new ProcessChangeAction();
 			break;
 		default:
 			break;
