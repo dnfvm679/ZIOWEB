@@ -14,7 +14,7 @@ import com.dto.UserVO;
 public class UpdateUserAction implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = "Factory?cmd=viewUser&userid=" + request.getParameter("userid");
+		String url = "Factory?cmd=viewUser&userid=" + request.getParameter("id");
 		UsersDAO usersdao = new UsersDAO();
 		UserVO user = new UserVO();
 		user.setCompany_id(request.getParameter("company_id"));

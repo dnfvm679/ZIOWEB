@@ -1,3 +1,4 @@
+<%@page import="com.dao.RequestDAO"%>
 <%@page import="java.util.Properties"%>
 <%@page import="com.util.PropertyManager"%>
 <%@page import="com.util.DBManager"%>
@@ -14,12 +15,15 @@
 <!-- Bootstrap file -->
 <link rel="stylesheet" href="/ZIOWEB/css/bootstrap.css">
 <link rel="stylesheet" href="/ZIOWEB/css/custom.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="/ZIOWEB/js/bootstrap.js"></script>
 
 <title>ZIOWEB</title>
 </head>
 <body>
+
+	<%
+		new RequestDAO().checkFinishCount();
+	%>
 	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 		<!-- Brand/logo -->
 		<a class="navbar-brand" href="/ZIOWEB/Factory?cmd=main">ZIONEX</a>
@@ -90,9 +94,9 @@
 			<%
 				if (userid.equals("ADMIN")) {
 			%>
-			<li class="nav-itme"><a class="nav-item"
+			<li class="nav-itme"><a class="nav-link"
 				href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a></li>
-			<li class="nav-itme"><a class="nav-item"
+			<li class="nav-itme"><a class="nav-link"
 				href="/ZIOWEB/Factory?cmd=userManagement&page=1">고객사관리</a></li>
 			<%
 				}
@@ -105,8 +109,6 @@
 			%>
 			<li class="nav-item"><a class="nav-link"
 				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a></li>
-			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
-			</li>
 		</ul>
 
 	</aside>
@@ -149,13 +151,95 @@
 				</div>
 				<div class="col-sm-3"></div>
 			</div>
+
+			<div class="row">
+				<div class="col-sm-1"></div>
+				<div class="col-sm-4">
+					<div id="donutchart" style="width: 100%; height: 500PX;"></div>
+				</div>
+				<div class="col-sm-4">
+					<div id="chart_div" style="width: 100%; height: 500PX;"></div>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
 		</div>
-		<div id="donutchart" style="width: 100%; height: 500PX;"></div>
 	</section>
 
 
 	<!-- Google Chart -->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
+	<script>
+		var finish = new Array();
+		var unfinish = new Array();
+		setInterval(function() {
+			google.charts.load('current', {
+				packages : [ 'corechart', 'line' ]
+			});
+			google.charts.setOnLoadCallback(drawBackgroundColor);
+			$.ajax({
+				type : "GET",
+				url : "Factory?cmd=getPeriodRequestNum",
+				dataType : "json",
+				error : function() {
+					alert('통신실패!!');
+				},
+				success : function(data) {
+					finish[0] = data.finish0;
+					finish[1] = data.finish1;
+					finish[2] = data.finish2;
+					finish[3] = data.finish3;
+					finish[4] = data.finish4;
+					finish[5] = data.finish5;
+					finish[6] = data.finish6;
+	
+					unfinish[0] = data.unfinish0;
+					unfinish[1] = data.unfinish1;
+					unfinish[2] = data.unfinish2;
+					unfinish[3] = data.unfinish3;
+					unfinish[4] = data.unfinish4;
+					unfinish[5] = data.unfinish5;
+					unfinish[6] = data.unfinish6;
+				}
+			});
+	
+			function drawBackgroundColor() {
+				var data = new google.visualization.DataTable();
+				data.addColumn('date', 'X');
+				data.addColumn('number', '처리건수');
+				data.addColumn('number', '미처리건수');
+				var date = new Date();
+				data.addRows([
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6), finish[6], unfinish[6] ],
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate() - 5), finish[5], unfinish[5] ],
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate() - 4), finish[4], unfinish[4] ],
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate() - 3), finish[3], unfinish[3] ],
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate() - 2), finish[2], unfinish[2] ],
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1), finish[1], unfinish[1] ],
+					[ new Date(date.getFullYear(), date.getMonth(), date.getDate()), finish[0], unfinish[0] ]
+				]);
+	
+				var options = {
+					title : '일주일 간 요청 처리 수',
+					hAxis : {
+						title : '일자',
+						gridlines : {
+							count : 7
+						}
+					},
+					vAxis : {
+						title : '처리건수',
+						gridlines : {
+							count : 0
+						}
+					},
+					backgroundColor : '#fff'
+				};
+	
+				var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+				chart.draw(data, options);
+			}
+		}, 1000)
+	</script>
 	<script>
 		var finished;
 		var unfinished;

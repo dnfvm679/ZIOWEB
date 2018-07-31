@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 
 import com.dto.RequestVO;
 import com.util.DBManager;
@@ -24,7 +25,7 @@ public class RequestDAO {
 		String sql = "SELECT ROWNUM, B.* " + "FROM  (SELECT RI.*,C.NAME STATE_NAME,U.NAME USER_NAME"
 				+ "        FROM TBL_REQUEST_INFO RI,TBL_REQUEST_PROCESS RP,TBL_COMMON_CODE  C,TBL_USER_MASTER U "
 				+ "        WHERE RI.ID = RP.ID AND RP.PROCESS_STATE_ID = C.ID AND RI.USER_ID=U.ID AND RI.USE_YN='Y' "
-				+ "        ORDER BY ROWNUM DESC) B  " + "WHERE ROWNUM < ?";
+				+ "        ORDER BY REQ_INDEX DESC) B  " + "WHERE ROWNUM < ?";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -65,7 +66,7 @@ public class RequestDAO {
 		String sql = "SELECT ROWNUM, B.* " + "FROM  (SELECT RI.*,C.NAME STATE_NAME,U.NAME USER_NAME"
 				+ "        FROM TBL_REQUEST_INFO RI,TBL_REQUEST_PROCESS RP,TBL_COMMON_CODE  C,TBL_USER_MASTER U "
 				+ "        WHERE RI.ID = RP.ID AND RP.PROCESS_STATE_ID = C.ID AND RI.USER_ID=U.ID AND RI.USER_ID=? "
-				+ " 				AND RI.USE_YN='Y' " + "        ORDER BY ROWNUM DESC) B  " + "WHERE ROWNUM < ?";
+				+ " 				AND RI.USE_YN='Y' " + " ORDER BY REQ_INDEX DESC) B  " + "WHERE ROWNUM < ?";
 		System.out.println(id);
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -158,6 +159,7 @@ public class RequestDAO {
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setString(1, request.getId());
 			pstmt.executeUpdate();
+			checkFinishCount();
 			return true;
 		} catch (Exception e) {
 			log.info(e);
@@ -167,32 +169,16 @@ public class RequestDAO {
 
 	public RequestVO getRequset(String id) {
 		RequestVO request = null;
-		String sql = "SELECT RI.*  " + 
-				"    ,RP.USER_ID MANAGER_ID  " + 
-				"    ,RP.PROCESS_STATE_ID  " + 
-				"    ,RP.PROCESS_TYPE_ID  " + 
-				"    ,RP.PROCESS_FORM_ID  " + 
-				"    ,RP.COMPLETE_DATE  " + 
-				"    ,RP.PROCESS_CONTENT  " + 
-				"    ,RP.PROCESS_HOUR  " + 
-				"    ,(SELECT STATE.NAME   " + 
-				"        FROM TBL_COMMON_CODE STATE   " + 
-				"       WHERE RP.PROCESS_STATE_ID = STATE.ID ) AS S_NAME  " + 
-				"    ,(SELECT TYPE.NAME   " + 
-				"        FROM TBL_COMMON_CODE TYPE   " + 
-				"       WHERE RP.PROCESS_TYPE_ID = TYPE.ID ) AS T_NAME  " + 
-				"    ,(SELECT FORM.NAME   " + 
-				"        FROM TBL_COMMON_CODE FORM   " + 
-				"       WHERE RP.PROCESS_FORM_ID = FORM.ID ) AS F_NAME  " + 
-				"    ,RP.PROCESS_FORM_ID  " + 
-				"    ,U.NAME USER_NAME   " + 
-				"FROM TBL_REQUEST_INFO RI  " + 
-				"    , TBL_REQUEST_PROCESS RP  " + 
-				"    , TBL_USER_MASTER U  " + 
-				"WHERE RI.ID = RP.ID   " + 
-				"    AND RI.USER_ID = U.ID   " + 
-				"    AND RI.ID=?   " + 
-				"    AND RI.USE_YN='Y'";
+		String sql = "SELECT RI.*  " + "    ,RP.USER_ID MANAGER_ID  " + "    ,RP.PROCESS_STATE_ID  "
+				+ "    ,RP.PROCESS_TYPE_ID  " + "    ,RP.PROCESS_FORM_ID  " + "    ,RP.COMPLETE_DATE  "
+				+ "    ,RP.PROCESS_CONTENT  " + "    ,RP.PROCESS_HOUR  " + "    ,(SELECT STATE.NAME   "
+				+ "        FROM TBL_COMMON_CODE STATE   " + "       WHERE RP.PROCESS_STATE_ID = STATE.ID ) AS S_NAME  "
+				+ "    ,(SELECT TYPE.NAME   " + "        FROM TBL_COMMON_CODE TYPE   "
+				+ "       WHERE RP.PROCESS_TYPE_ID = TYPE.ID ) AS T_NAME  " + "    ,(SELECT FORM.NAME   "
+				+ "        FROM TBL_COMMON_CODE FORM   " + "       WHERE RP.PROCESS_FORM_ID = FORM.ID ) AS F_NAME  "
+				+ "    ,RP.PROCESS_FORM_ID  " + "    ,U.NAME USER_NAME   " + "FROM TBL_REQUEST_INFO RI  "
+				+ "    , TBL_REQUEST_PROCESS RP  " + "    , TBL_USER_MASTER U  " + "WHERE RI.ID = RP.ID   "
+				+ "    AND RI.USER_ID = U.ID   " + "    AND RI.ID=?   " + "    AND RI.USE_YN='Y'";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
@@ -358,11 +344,90 @@ public class RequestDAO {
 			pstmt.setString(3, requestvo.getComplete_date());
 			pstmt.setString(4, requestvo.getId());
 			pstmt.executeUpdate();
+			checkFinishCount();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.info(e);
 			return false;
+		}
+	}
+
+	public JSONObject getPeriodRequestNum() {
+		String sql = " SELECT * " + " FROM (SELECT * " + "       FROM TBL_FINISH_COUNT "
+				+ "       ORDER BY COUNT_DATE DESC " + "       ) " + "WHERE ROWNUM<7";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				JSONObject jsonobj = new JSONObject();
+				int i = 0;
+				do {
+					jsonobj.put("finish" + i, rs.getInt("finish_count"));
+					jsonobj.put("unfinish" + i, rs.getInt("unfinish_count"));
+					i++;
+				} while (rs.next());
+				pstmt.close();
+				rs.close();
+				return jsonobj;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			log.info(e);
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public void checkFinishCount() {
+		String sql = "SELECT * FROM TBL_FINISH_COUNT "
+				+ "WHERE TO_CHAR(COUNT_DATE,'yyyyMMdd') = TO_CHAR(SYSDATE,'yyyyMMdd')";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				updateFinishCount();
+			} else {
+				createFinishCount();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
+		}
+	}
+
+	public void createFinishCount() {
+		String sql = "INSERT INTO TBL_FINISH_COUNT VALUES(SYSDATE,0,0)";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeQuery();
+			updateFinishCount();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
+		}
+	}
+
+	public void updateFinishCount() {
+		String sql = "UPDATE TBL_FINISH_COUNT SET FINISH_COUNT=?,UNFINISH_COUNT=? "
+				+ "WHERE TO_CHAR(COUNT_DATE,'yyyyMMdd') = TO_CHAR(SYSDATE,'yyyyMMdd')";
+		PreparedStatement pstmt = null;
+		int finish = getFinished_RequestNum();
+		int unfinish = getUnfinished_RequestNum();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, finish);
+			pstmt.setInt(2, unfinish);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
 		}
 	}
 }
