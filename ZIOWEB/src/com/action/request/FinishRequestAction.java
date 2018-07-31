@@ -11,24 +11,32 @@ import com.action.Action;
 import com.dao.RequestDAO;
 import com.dto.RequestVO;
 
-public class UpdateRequestAction implements Action {
+public class FinishRequestAction implements Action {
 	@Override
 	public void excute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
 		String url = "Factory?cmd=viewRequest&id="+ request.getParameter("id");
+		String id = request.getParameter("id");
+		String time = request.getParameter("time")+request.getParameter("unit");
+		String date = request.getParameter("date");
+		String content = request.getParameter("content");
+		
 		RequestVO requestvo = new RequestVO();
-		requestvo.setId(request.getParameter("id"));
-		requestvo.setTitle(request.getParameter("title"));
-		requestvo.setContent(request.getParameter("content"));
+		requestvo.setComplete_date(date);
+		requestvo.setProcess_content(content);
+		requestvo.setId(id);
+		requestvo.setProcess_hour(time);
+		
 		RequestDAO requestdao = new RequestDAO();
-		if (requestdao.updateRequest(requestvo)) {
+		if(requestdao.finishRequest(requestvo)) {
 			response.sendRedirect(url);
-		} else {
+		}else{
 			PrintWriter out = response.getWriter();
 			out.println("<script>");
-			out.println("alert('Write Failed');");
+			out.println("alert('Finish Failed');");
 			out.println("history.back();");
 			out.println("</script>");
 		}
+		
 	}
+
 }

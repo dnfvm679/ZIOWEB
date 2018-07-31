@@ -15,6 +15,8 @@ import com.action.member.UpdateUserForm;
 import com.action.member.UserManagementForm;
 import com.action.member.ViewUserAction;
 import com.action.request.DeleteRequestAction;
+import com.action.request.FinishRequestAction;
+import com.action.request.FinishRequestForm;
 import com.action.request.GetRequestListAction;
 import com.action.request.ProcessChangeAction;
 import com.action.request.ProcessChangeForm2;
@@ -23,6 +25,7 @@ import com.action.request.UpdateRequestForm;
 import com.action.request.ViewRequestAction;
 import com.action.request.WriteRequestAction;
 import com.action.request.WriteRequestForm;
+import com.action.request.getRequestNum;
 
 public class ActionFactory {
 	private static ActionFactory af = new ActionFactory();
@@ -102,6 +105,16 @@ public class ActionFactory {
 			break;
 		case "processChange":
 			action = new ProcessChangeAction();
+			break;
+		case "getRequestNum":
+			action = new getRequestNum();
+			break;
+
+		case "finishRequestForm":
+			action = new FinishRequestForm();
+			break;
+		case "finishRequest":
+			action = new FinishRequestAction();
 			break;
 		default:
 			break;

@@ -160,20 +160,6 @@
 							</tr>
 						</tbody>
 					</table>
-
-					<div class="float-right">
-						<%
-							if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))) {
-						%>
-						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>">수정하기</a>
-						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
-						<%
-							}
-						%>
-
-					</div>
 				</div>
 				<!-- End of Show request -->
 
@@ -199,10 +185,18 @@
 												<%
 													for (CommonCodeVO c : list) {
 														if (c.getGroup_id().equals("PROCESS_STATE")) {
+															if (!c.getId().equals("S04")) {
+																if (requestvo.getProcess_state_id().equals(c.getId())) {
+												%>
+												<option value="<%=c.getId()%>" selected><%=c.getName()%></option>
+												<%
+													} else {
 												%>
 												<option value="<%=c.getId()%>"><%=c.getName()%></option>
 												<%
 													}
+															}
+														}
 													}
 												%>
 											</select>
@@ -214,8 +208,19 @@
 									<td class="tag">처리 담당자ID</td>
 									<td>
 										<div class="form-group">
+											<%
+												if (requestvo.getManager_id() != null) {
+											%>
+											<input class="form-control" type="text" name="manager_id"
+												value="<%=requestvo.getManager_id() %>" placeholder="담당자 ID를 입력해주세요">
+											<%
+												} else {
+											%>
 											<input class="form-control" type="text" name="manager_id"
 												placeholder="담당자 ID를 입력해주세요">
+											<%
+												}
+											%>
 										</div>
 									</td>
 								</tr>
@@ -228,10 +233,16 @@
 												<%
 													for (CommonCodeVO c : list) {
 														if (c.getGroup_id().equals("PROCESS_TYPE")) {
+															if (requestvo.getProcess_type_id() != null && requestvo.getProcess_type_id().equals(c.getId())) {
+												%>
+												<option value="<%=c.getId()%>" selected><%=c.getName()%></option>
+												<%
+													} else {
 												%>
 												<option value="<%=c.getId()%>"><%=c.getName()%></option>
 												<%
 													}
+														}
 													}
 												%>
 											</select>
@@ -247,10 +258,16 @@
 												<%
 													for (CommonCodeVO c : list) {
 														if (c.getGroup_id().equals("PROCESS_FORM")) {
+															if (requestvo.getProcess_form_id() != null &&requestvo.getProcess_form_id().equals(c.getId())) {
+												%>
+												<option value="<%=c.getId()%>" selected><%=c.getName()%></option>
+												<%
+													} else {
 												%>
 												<option value="<%=c.getId()%>"><%=c.getName()%></option>
 												<%
 													}
+														}
 													}
 												%>
 											</select>

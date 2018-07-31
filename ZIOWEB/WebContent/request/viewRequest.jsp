@@ -194,17 +194,62 @@
 						<%
 							if (session.getAttribute("userid") != null) {
 								if (session.getAttribute("userid").toString().equals("ADMIN")) {
+									if (!requestvo.getProcess_state_id().equals("S04")) {
 						%>
 						<a class="btn btn-primary"
 							href="/ZIOWEB/Factory?cmd=processChangeForm&id=<%=requestvo.getId()%>">처리상태변경</a>
 						<%
 							}
+									if (requestvo.getProcess_state_id().equals("S03")) {
+						%>
+						<a class="btn btn-primary"
+							href="/ZIOWEB/Factory?cmd=finishRequestForm&id=<%=requestvo.getId()%>">처리완료하기</a>
+						<%
+							}
+								}
 							}
 						%>
 						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
 					</div>
 				</div>
+
+				<%
+					if (requestvo.getProcess_state_id().equals("S04")) {
+				%>
+				<div class="col-sm-3">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th colspan="2">처리내용</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="tag">처리완료일</td>
+								<td><%=requestvo.getComplete_date() %></td>
+							</tr>
+
+							<tr>
+								<td class="tag">처리공수</td>
+								<td><%=requestvo.getProcess_hour() %></td>
+							</tr>
+
+							<tr>
+								<td class="tag">처리내용</td>
+								<td><%=requestvo.getProcess_content() %></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="col-sm-1"></div>
+				<%
+					} else {
+				%>
 				<div class="col-sm-4"></div>
+				<%
+					}
+				%>
 			</div>
 		</div>
 	</section>

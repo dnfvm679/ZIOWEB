@@ -21,12 +21,10 @@ public class RequestDAO {
 
 	public ArrayList<RequestVO> getRequestList(int page) {
 		ArrayList<RequestVO> list = new ArrayList<RequestVO>();
-		String sql = "SELECT ROWNUM, B.* " + 
-				"FROM  (SELECT RI.*,C.NAME STATE_NAME,U.NAME USER_NAME" + 
-				"        FROM TBL_REQUEST_INFO RI,TBL_REQUEST_PROCESS RP,TBL_COMMON_CODE  C,TBL_USER_MASTER U " + 
-				"        WHERE RI.ID = RP.ID AND RP.PROCESS_STATE_ID = C.ID AND RI.USER_ID=U.ID AND RI.USE_YN='Y' " + 
-				"        ORDER BY ROWNUM DESC) B  " + 
-				"WHERE ROWNUM < ?";
+		String sql = "SELECT ROWNUM, B.* " + "FROM  (SELECT RI.*,C.NAME STATE_NAME,U.NAME USER_NAME"
+				+ "        FROM TBL_REQUEST_INFO RI,TBL_REQUEST_PROCESS RP,TBL_COMMON_CODE  C,TBL_USER_MASTER U "
+				+ "        WHERE RI.ID = RP.ID AND RP.PROCESS_STATE_ID = C.ID AND RI.USER_ID=U.ID AND RI.USE_YN='Y' "
+				+ "        ORDER BY ROWNUM DESC) B  " + "WHERE ROWNUM < ?";
 
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -61,16 +59,13 @@ public class RequestDAO {
 			return null;
 		}
 	} // End of getBoards
-	
-	public ArrayList<RequestVO> getRequestList(int page,String id) {
+
+	public ArrayList<RequestVO> getRequestList(int page, String id) {
 		ArrayList<RequestVO> list = new ArrayList<RequestVO>();
-		String sql = "SELECT ROWNUM, B.* " + 
-				"FROM  (SELECT RI.*,C.NAME STATE_NAME,U.NAME USER_NAME" + 
-				"        FROM TBL_REQUEST_INFO RI,TBL_REQUEST_PROCESS RP,TBL_COMMON_CODE  C,TBL_USER_MASTER U " + 
-				"        WHERE RI.ID = RP.ID AND RP.PROCESS_STATE_ID = C.ID AND RI.USER_ID=U.ID AND RI.USER_ID=? " +
-				" 				AND RI.USE_YN='Y' " + 
-				"        ORDER BY ROWNUM DESC) B  " + 
-				"WHERE ROWNUM < ?";
+		String sql = "SELECT ROWNUM, B.* " + "FROM  (SELECT RI.*,C.NAME STATE_NAME,U.NAME USER_NAME"
+				+ "        FROM TBL_REQUEST_INFO RI,TBL_REQUEST_PROCESS RP,TBL_COMMON_CODE  C,TBL_USER_MASTER U "
+				+ "        WHERE RI.ID = RP.ID AND RP.PROCESS_STATE_ID = C.ID AND RI.USER_ID=U.ID AND RI.USER_ID=? "
+				+ " 				AND RI.USE_YN='Y' " + "        ORDER BY ROWNUM DESC) B  " + "WHERE ROWNUM < ?";
 		System.out.println(id);
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -106,7 +101,6 @@ public class RequestDAO {
 			return null;
 		}
 	} // End of getBoards
-	
 
 	public String getBoardNum(String company_id) {
 		String sql = "SELECT LPAD(COUNT(*)+1,4,'0') C FROM TBL_REQUEST_INFO"
@@ -150,7 +144,7 @@ public class RequestDAO {
 
 	public boolean writeRequest(RequestVO request) { // Write Request
 		String sql = "INSERT INTO TBL_REQUEST_INFO " + "VALUES(BOARD_SEQ.NEXTVAL,?,?,?,?,SYSDATE,NULL,'Y')";
-		String sql2 = "INSERT INTO TBL_REQUEST_PROCESS(ID,USER_ID,PROCESS_STATE_ID,USE_YN) VALUES (?,?,'S01','Y')";
+		String sql2 = "INSERT INTO TBL_REQUEST_PROCESS(ID,PROCESS_STATE_ID,USE_YN) VALUES (?,'S01','Y')";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -159,11 +153,10 @@ public class RequestDAO {
 			pstmt.setString(3, request.getTitle());
 			pstmt.setString(4, request.getContent());
 			pstmt.executeUpdate();
-			
+
 			pstmt.close();
 			pstmt = conn.prepareStatement(sql2);
-			pstmt.setString(1,request.getId());
-			pstmt.setString(2,request.getUser_id());
+			pstmt.setString(1, request.getId());
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -179,6 +172,9 @@ public class RequestDAO {
 				"    ,RP.PROCESS_STATE_ID  " + 
 				"    ,RP.PROCESS_TYPE_ID  " + 
 				"    ,RP.PROCESS_FORM_ID  " + 
+				"    ,RP.COMPLETE_DATE  " + 
+				"    ,RP.PROCESS_CONTENT  " + 
+				"    ,RP.PROCESS_HOUR  " + 
 				"    ,(SELECT STATE.NAME   " + 
 				"        FROM TBL_COMMON_CODE STATE   " + 
 				"       WHERE RP.PROCESS_STATE_ID = STATE.ID ) AS S_NAME  " + 
@@ -218,6 +214,9 @@ public class RequestDAO {
 				request.setProcess_type_id(rs.getString("process_type_id"));
 				request.setProcess_type_name(rs.getString("t_name"));
 				request.setManager_id(rs.getString("MANAGER_ID"));
+				request.setComplete_date(rs.getString("complete_date"));
+				request.setProcess_content(rs.getString("process_content"));
+				request.setProcess_hour(rs.getString("process_hour"));
 			} else {
 				log.info(id + " Request is not exist");
 			}
@@ -228,7 +227,6 @@ public class RequestDAO {
 		return request;
 	}
 
-	
 	public boolean updateRequest(RequestVO request) {
 		String sql = "UPDATE TBL_REQUEST_INFO SET TITLE=?,CONTENT=? WHERE ID=?";
 		PreparedStatement pstmt = null;
@@ -261,8 +259,7 @@ public class RequestDAO {
 
 	public boolean updateProcess(RequestVO r) {
 		String sql = "UPDATE TBL_REQUEST_PROCESS "
-				+ "SET PROCESS_STATE_ID=?,USER_ID=?,PROCESS_FORM_ID=?,PROCESS_TYPE_ID=? "
-				+ "WHERE ID=?";
+				+ "SET PROCESS_STATE_ID=?,USER_ID=?,PROCESS_FORM_ID=?,PROCESS_TYPE_ID=? " + "WHERE ID=?";
 		PreparedStatement pstmt = null;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -274,6 +271,96 @@ public class RequestDAO {
 			pstmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
+			log.info(e);
+			return false;
+		}
+	}
+
+	public int getRequestNum() {
+		String sql = "SELECT COUNT(*) REQUEST_NUM " + "FROM TBL_REQUEST_INFO "
+				+ "WHERE ID LIKE '%'||TO_CHAR(SYSDATE,'yyyyMMdd')||'%'";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int result = rs.getInt("request_num");
+				pstmt.close();
+				rs.close();
+				return result;
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
+			return -1;
+		}
+	}
+
+	public int getFinished_RequestNum() {
+		String sql = "SELECT COUNT(*) REQUEST_NUM" + "  FROM TBL_REQUEST_INFO RI " + "       ,TBL_REQUEST_PROCESS RP "
+				+ " WHERE RI.ID = RP.ID " + "       AND RP.PROCESS_STATE_ID = 'S04' "
+				+ "       AND RI.ID LIKE '%'||TO_CHAR(SYSDATE,'yyyyMMdd')||'%'";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int result = rs.getInt("request_num");
+				pstmt.close();
+				rs.close();
+				return result;
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
+			return -1;
+		}
+	}
+
+	public int getUnfinished_RequestNum() {
+		String sql = "SELECT COUNT(*) REQUEST_NUM" + "  FROM TBL_REQUEST_INFO RI " + "       ,TBL_REQUEST_PROCESS RP "
+				+ " WHERE RI.ID = RP.ID " + "       AND RP.PROCESS_STATE_ID != 'S04' "
+				+ "       AND RI.ID LIKE '%'||TO_CHAR(SYSDATE,'yyyyMMdd')||'%'";
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				int result = rs.getInt("request_num");
+				pstmt.close();
+				rs.close();
+				return result;
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info(e);
+			return -1;
+		}
+	}
+
+	public boolean finishRequest(RequestVO requestvo) {
+		String sql = "UPDATE TBL_REQUEST_PROCESS " + "   SET PROCESS_CONTENT=? " + "       ,PROCESS_STATE_ID='S04'"
+				+ "       ,PROCESS_HOUR=? " + "       ,COMPLETE_DATE=? " + " WHERE ID=?";
+		PreparedStatement pstmt = null;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, requestvo.getProcess_content());
+			pstmt.setString(2, requestvo.getProcess_hour());
+			pstmt.setString(3, requestvo.getComplete_date());
+			pstmt.setString(4, requestvo.getId());
+			pstmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
 			log.info(e);
 			return false;
 		}
