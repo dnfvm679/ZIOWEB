@@ -134,7 +134,7 @@
 					if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))
 							&& !requestvo.getProcess_state_id().equals("S04")) {
 				%><a href="#" class="btn btn-primary"
-					data-remote="/ZIOWEB/index.jsp"
+					data-remote="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>&state_name=<%=request.getParameter("state_name")%>>"
 					data-toggle="modal" data-target="#theModal2"> 수정하기</a>
 					<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
 				<%
