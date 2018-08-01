@@ -162,9 +162,12 @@
 				</div>
 				<div class="col-sm-3"></div>
 			</div>
+			<div class="row">
+			<button class="btn btn-primary" data-remote="/ZIOWEB/member/loginForm.jsp"
+		data-toggle="modal" data-target="#theModal">Modal</button>
+			</div>
 		</div>
 	</section>
-
 
 	<!-- Google Chart -->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
