@@ -28,7 +28,7 @@
 	%>
 	<script>
 		alert("로그인이 필요한 서비스입니다.");
-		location.href("/ZIOWEB/member/loginForm.jsp");
+		location.href("/ZIOWEB/request/loginForm.jsp");
 	</script>
 	<%
 		}
