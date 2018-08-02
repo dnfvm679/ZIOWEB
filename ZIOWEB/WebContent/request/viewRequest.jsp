@@ -187,8 +187,9 @@
 										String fName[] = dir.list();
 										if (fName != null) {
 											for (String fileName : fName) {
-												out.write("<a href=\"" + request.getContextPath() + "/Download?filename="
-														+ java.net.URLEncoder.encode(fileName, "UTF-8") + "\">" + fileName + "</a><br>");
+												out.write("<a href=\"" + request.getContextPath() + "/Download?id="
+														+ request.getParameter("id") + "&filename=" + java.net.URLEncoder.encode(fileName, "UTF-8")
+														+ "\">" + fileName + "</a><br>");
 											}
 										}
 									%>
