@@ -180,10 +180,11 @@
 								</tr>
 
 								<tr>
-									<td>파일 첨부하기 <a id="add" class="btn btn-primary">+</a>
-										<a id="remove" class="btn btn-primary">-</a>
+									<td>파일 첨부하기 <a id="add" class="btn btn-light">+</a> <a
+										id="remove" class="btn btn-light">-</a>
 									</td>
-									<td id="fileUpload"><input class="form-control" type="file" name="file"></td>
+									<td id="fileUpload"><input class="form-control"
+										type="file" name="file"></td>
 								</tr>
 								<tr>
 									<td colspan="2">이미지가 많은 경우 압축해서 올려주세요. 최대 100MB까지 업로드
@@ -213,8 +214,10 @@
 		});
 	
 		$("#remove").click(function() {
-			i--;
-			$("#i").remove();
+			if (i > 0) {
+				i--;
+				$("#i").remove();
+			}
 		});
 	</script>
 </body>

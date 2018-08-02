@@ -120,7 +120,8 @@
 			<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-7" style="text-align: center">
-					<form action="/ZIOWEB/Factory?cmd=updateRequest&id=<%=requestvo.getId()%> "
+					<form
+						action="/ZIOWEB/Factory?cmd=updateRequest&id=<%=requestvo.getId()%> "
 						method="post" enctype="multipart/form-data">
 						<table class="table table-hover">
 							<thead>
@@ -167,7 +168,7 @@
 											String fName[] = dir.list();
 											if (fName != null) {
 												for (String fileName : fName) {
-													out.write(fileName+"<a class='btn btn-danger' href='/ZIOWEB/FileDelete?id=" + requestvo.getId()
+													out.write(fileName + "<a class='btn btn-danger' href='/ZIOWEB/FileDelete?id=" + requestvo.getId()
 															+ "&fileName=" + fileName + "'>삭제하기</a><br>");
 												}
 											}
@@ -205,8 +206,10 @@
 		});
 	
 		$("#remove").click(function() {
-			i--;
-			$("#i").remove();
+			if (i > 0) {
+				i--;
+				$("#i").remove();
+			}
 		});
 	</script>
 </body>

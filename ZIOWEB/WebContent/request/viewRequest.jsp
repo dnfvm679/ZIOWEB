@@ -201,12 +201,14 @@
 					<div class="float-right">
 						<%
 							if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))) {
+								if(!requestvo.getProcess_state_id().equals("S04")){
 						%>
 						<a class="btn btn-primary"
 							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>&state_name=<%=request.getParameter("state_name")%>">수정하기</a>
 						<a class="btn btn-primary"
 							href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
 						<%
+							}
 							}
 						%>
 
