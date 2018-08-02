@@ -141,9 +141,7 @@
 							<tr>
 								<td><a
 									href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"><%=r.getReq_index()%></a></td>
-								<td><a href="#"
-									data-remote="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"
-									data-toggle="modal"	data-target="#theModal"><%=r.getTitle()%></a></td>
+								<td><a href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"><%=r.getTitle()%></a></td>
 								<td><%=r.getUser_name()%></td>
 								<td><%=r.getRequest_date()%></td>
 								<td><%=r.getProcess_state_name()%></td>

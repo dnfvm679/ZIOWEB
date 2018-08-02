@@ -28,7 +28,7 @@
 	%>
 	<script>
 		alert("로그인이 필요한 서비스입니다.");
-		location.href("/ZIOWEB/request/loginForm.jsp");
+		location.href("/ZIOWEB/member/loginForm.jsp");
 	</script>
 	<%
 		}
@@ -123,26 +123,26 @@
 
 	</aside>
 	<!-- End of SideMenu -->
-	
+
 	<section>
 		<div class="container-fluid">
 			<br>
 			<div class="row">
 				<div class="col-sm-1"></div>
 				<div class="col-sm-7" style="text-align: center">
-					<form action="/ZIOWEB/Factory" method="post">
+					<%
+						String company_id = (String)request.getAttribute("company_id");
+						String board_num = (String)request.getAttribute("board_num");
+						Date date = new Date();
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+						String request_id = "R_" + company_id + "_" + sdf.format(date) + "_" + board_num;
+					%>
+					<form action="/ZIOWEB/Factory?cmd=writeRequest&id=<%=request_id%>"
+						method="post" enctype="multipart/form-data">
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th colspan="2"><input type="hidden" value="writeRequest"
-										name="cmd"> <%
- 	String company_id = (String) request.getAttribute("company_id");
- 	String board_num = (String) request.getAttribute("board_num");
- 	Date date = new Date();
- 	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
- 	String request_id = "R_" + company_id + "_" + sdf.format(date) + "_" + board_num;
- %> <input type="hidden" class="form-control" value="<%=request_id%>"
-										placeholder="Enter Title" name="id" readonly> 요청 작성하기</th>
+									<th colspan="2">요청 작성하기</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -159,10 +159,10 @@
 									<td>작성자</td>
 									<td>
 										<div class="form-group">
-											<input type="hidden" class="form-control" name="writer"
+											<input type="hidden" class="form-control" name="user"
 												value=<%=session.getAttribute("userid")%>
-												readonly="readonly">
-											<input type="text" class="form-control" name="dummy"
+												readonly="readonly"> <input type="text"
+												class="form-control" name="dummy"
 												value=<%=session.getAttribute("userName")%>
 												readonly="readonly">
 										</div>
@@ -177,6 +177,15 @@
 												placeholder="Enter Content"></textarea>
 										</div>
 									</td>
+								</tr>
+
+								<tr>
+									<td>파일 첨부하기</td>
+									<td><input type="file" name="file"></td>
+								</tr>
+								<tr>
+									<td colspan="2">이미지가 많은 경우 압축해서 올려주세요. 최대 100MB까지 업로드
+										가능합니다.</td>
 								</tr>
 							</tbody>
 						</table>

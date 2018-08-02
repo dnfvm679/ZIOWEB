@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="com.dto.RequestVO"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="com.util.DBManager"%>
@@ -176,6 +177,23 @@
 									<div><%=requestvo.getContent()%></div>
 								</td>
 							</tr>
+							<tr>
+								<td colspan="2">첨부파일</td>
+								<td colspan="2">
+									<%
+										String saveDir = application.getRealPath("/filestorage/" + request.getParameter("id"));
+										File dir = new File(saveDir);
+
+										String fName[] = dir.list();
+										if (fName != null) {
+											for (String fileName : fName) {
+												out.write("<a href=\"" + request.getContextPath() + "/Download?filename="
+														+ java.net.URLEncoder.encode(fileName, "UTF-8") + "\">" + fileName + "</a><br>");
+											}
+										}
+									%>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 
@@ -226,17 +244,17 @@
 						<tbody>
 							<tr>
 								<td class="tag">처리완료일</td>
-								<td><%=requestvo.getComplete_date() %></td>
+								<td><%=requestvo.getComplete_date()%></td>
 							</tr>
 
 							<tr>
 								<td class="tag">처리공수</td>
-								<td><%=requestvo.getProcess_hour() %></td>
+								<td><%=requestvo.getProcess_hour()%></td>
 							</tr>
 
 							<tr>
 								<td class="tag">처리내용</td>
-								<td><%=requestvo.getProcess_content() %></td>
+								<td><%=requestvo.getProcess_content()%></td>
 							</tr>
 						</tbody>
 					</table>
