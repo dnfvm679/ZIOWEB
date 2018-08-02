@@ -50,7 +50,14 @@ public class Upload extends HttpServlet {
 		int maxSize = 1024 * 1024 * 100;
 		String encType = "UTF-8";
 
-		new MultipartRequest(request, saveDir, maxSize, encType, new DefaultFileRenamePolicy());
+		MultipartRequest multipartRequest = new MultipartRequest(request, saveDir, maxSize, encType,
+				new DefaultFileRenamePolicy());
+		PrintWriter out = response.getWriter();
+		out.write("이름 : " + multipartRequest.getParameter("name") + "<br>");
+		out.write("파일 : " + multipartRequest.getParameter("file") + "<br>"); // null 값을 갖는다.
+		out.write("업로드파일명 : " + multipartRequest.getFilesystemName("file") + "<br>");
+		out.write("원래파일명 : " + multipartRequest.getOriginalFileName("file") + "<br>");
+
 	}
 
 }

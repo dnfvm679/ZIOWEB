@@ -14,9 +14,10 @@
 <title>FILE UPLOAD EXAMPLE</title>
 </head>
 <body>
-	<form action="Upload" method="post" enctype="multipart/form-data">
+	<form action="uploadAction.jsp" method="post" enctype="multipart/form-data">
 		이름 : <input type="text" name="name"><br>
-		업로드 : <input type="file" name="file"><br>
+		업로드 : <input type="file" name="file" value="<%=application.getRealPath("/filestorage/")%>"><br>
+		업로드1 : <input type="file" name="file1" value="<%=application.getRealPath("/filestorage/")%>"><br>
 		<input type="submit" name="업로드"><br>
 	</form>
 </body>

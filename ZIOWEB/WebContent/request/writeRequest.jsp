@@ -131,8 +131,8 @@
 				<div class="col-sm-1"></div>
 				<div class="col-sm-7" style="text-align: center">
 					<%
-						String company_id = (String)request.getAttribute("company_id");
-						String board_num = (String)request.getAttribute("board_num");
+						String company_id = (String) request.getAttribute("company_id");
+						String board_num = (String) request.getAttribute("board_num");
 						Date date = new Date();
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 						String request_id = "R_" + company_id + "_" + sdf.format(date) + "_" + board_num;
@@ -180,8 +180,10 @@
 								</tr>
 
 								<tr>
-									<td>파일 첨부하기</td>
-									<td><input type="file" name="file"></td>
+									<td>파일 첨부하기 <a id="add" class="btn btn-primary">+</a>
+										<a id="remove" class="btn btn-primary">-</a>
+									</td>
+									<td id="fileUpload"><input class="form-control" type="file" name="file"></td>
 								</tr>
 								<tr>
 									<td colspan="2">이미지가 많은 경우 압축해서 올려주세요. 최대 100MB까지 업로드
@@ -201,5 +203,19 @@
 			</div>
 		</div>
 	</section>
+	<script>
+		var i = 0;
+		$("#add").click(function() {
+			if (i < 4) {
+				$("#fileUpload").append("<div id=i><br><input class='form-control' type='file' name='file'+i></div>");
+				i++;
+			}
+		});
+	
+		$("#remove").click(function() {
+			i--;
+			$("#i").remove();
+		});
+	</script>
 </body>
 </html>
