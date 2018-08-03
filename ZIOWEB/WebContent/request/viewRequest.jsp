@@ -20,55 +20,54 @@
 <title>ZIOWEB</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand/logo -->
-		<a class="navbar-brand" href="/ZIOWEB/Factory?cmd=main">ZIONEX</a>
-
-		<!-- Toggler/collapsibe Button -->
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#collapsibleNavbar">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-
-		<!-- Links -->
-		<div class="collapse navbar-collapse" id="collapsibleNavbar">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link"
-					href="/ZIOWEB/Factory?cmd=main">메인</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="/ZIOWEB/Factory?cmd=test">문의하기</a></li>
-				<li class="nav-item"><a class="nav-link"
-					href="/ZIOWEB/Factory?cmd=test">찾아오시는 길</a></li>
-			</ul>
-			<%
-				if (session.getAttribute("userid") == null) {
-			%>
-			<!-- Login Button -->
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link"
-					href="/ZIOWEB/Factory?cmd=loginform">로그인</a></li>
-			</ul>
-			<%
-				} else {
-			%>
-
-			<!-- Member info -->
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#" id="navbardrop"
-					data-toggle="dropdown"> 내정보 </a>
-
-					<div class="dropdown-menu">
-						<a class="dropdown-item"
-							href="/ZIOWEB/Factory?cmd=viewUser&userid=<%=(String) session.getAttribute("userid")%>">회원정보</a>
+	<%
+		RequestVO requestvo = (RequestVO) request.getAttribute("requestvo");
+	%>
+	<div class="container-fluid">
+		<br>
+		<div class="row">
+			<div class="col-sm-6">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2" class="text-center">글 상세보기</th>
+						</tr>
+					</thead>
+					<tbody>
 						<%
-							if (session.getAttribute("userid").toString().equals("ADMIN")) {
+							if (session.getAttribute("userid") != null) {
+								if (session.getAttribute("userid").toString().equals("ADMIN")) {
 						%>
-						<a class="dropdown-item"
-							href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a>
+						<tr>
+							<td class="tag">요청 ID</td>
+							<td><%=requestvo.getId()%></td>
+						</tr>
 						<%
 							}
+							}
 						%>
+<<<<<<< HEAD
+						<tr>
+							<td class="tag">제목</td>
+							<td><%=requestvo.getTitle()%></td>
+						</tr>
+						<tr>
+							<td class="tag">작성자</td>
+							<td><%=requestvo.getUser_name()%></td>
+						</tr>
+						<tr>
+							<td class="tag">작성일자</td>
+							<td><%=requestvo.getRequest_date()%></td>
+						</tr>
+						<tr>
+							<td class="tag">내용</td>
+							<td>
+								<p><%=requestvo.getContent().replace("\r\n", "<br>")%></p>
+							</td>
+						</tr>
+						<%
+							if (!requestvo.getProcess_state_id().equals("S01")) {
+=======
 						<a class="dropdown-item" href="/ZIOWEB/Factory?cmd=logout">로그아웃</a>
 					</div></li>
 			</ul>
@@ -202,41 +201,85 @@
 						<%
 							if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))) {
 								if(!requestvo.getProcess_state_id().equals("S04")){
+>>>>>>> 파일첨부
 						%>
-						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>&state_name=<%=request.getParameter("state_name")%>">수정하기</a>
-						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
+						<tr>
+							<td class="tag">처리담당자</td>
+							<td><%=requestvo.getManager_id()%></td>
+						</tr>
+						<tr>
+							<td class="tag">처리분류</td>
+							<td><%=requestvo.getProcess_type_name()%></td>
+						</tr>
 						<%
 							}
 							}
 						%>
+					</tbody>
+				</table>
 
-						<%
-							if (session.getAttribute("userid") != null) {
-								if (session.getAttribute("userid").toString().equals("ADMIN")) {
-									if (!requestvo.getProcess_state_id().equals("S04")) {
-						%>
-						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=processChangeForm&id=<%=requestvo.getId()%>">처리상태변경</a>
-						<%
-							}
-									if (requestvo.getProcess_state_id().equals("S03")) {
-						%>
-						<a class="btn btn-primary"
-							href="/ZIOWEB/Factory?cmd=finishRequestForm&id=<%=requestvo.getId()%>">처리완료하기</a>
-						<%
-							}
-								}
-							}
-						%>
-						<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
-					</div>
-				</div>
 
+			</div>
+			<div class="col-sm-6">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th colspan="2" class="text-center">처리내용</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="tag">처리상태</td>
+							<td><%=requestvo.getProcess_state_name()%></td>
+						</tr>
+						<%
+							if (!requestvo.getProcess_state_id().equals("S01")) {
+						%>
+						<tr>
+							<td class="tag">처리형태</td>
+							<td><%=requestvo.getProcess_form_name()%></td>
+						</tr>
+						<%
+							}
+						%>
+						<%
+							if (requestvo.getProcess_state_id().equals("S04")) {
+						%>
+						<tr>
+							<td class="tag">처리완료일</td>
+							<td><%=requestvo.getComplete_date()%></td>
+						</tr>
+
+						<tr>
+							<td class="tag">처리공수</td>
+							<td><%=requestvo.getProcess_hour()%></td>
+						</tr>
+
+						<tr>
+							<td class="tag">처리내용</td>
+							<td><%=requestvo.getProcess_content()%></td>
+						</tr>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row" style="float: right;">
+			<div>
 				<%
-					if (requestvo.getProcess_state_id().equals("S04")) {
+					if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))
+							&& !requestvo.getProcess_state_id().equals("S04")) {
+				%><a href="#" class="btn btn-primary"
+					data-remote="/ZIOWEB/Factory?cmd=updateRequestForm&id=<%=requestvo.getId()%>&state_name=<%=request.getParameter("state_name")%>>"
+					data-toggle="modal" data-target="#theModal2"> 수정하기</a>
+					<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=deleteRequest&id=<%=requestvo.getId()%>">삭제하기</a>
+				<%
+					}
 				%>
+<<<<<<< HEAD
+=======
 				<div class="col-sm-3">
 					<table class="table table-hover">
 						<thead>
@@ -264,15 +307,28 @@
 				</div>
 
 				<div class="col-sm-1"></div>
+>>>>>>> 파일첨부
 				<%
-					} else {
+					if (session.getAttribute("userid") != null) {
+						if (session.getAttribute("userid").toString().equals("ADMIN")) {
+							if (!requestvo.getProcess_state_id().equals("S04")) {
 				%>
-				<div class="col-sm-4"></div>
+				<a class="btn btn-primary"
+					href="/ZIOWEB/Factory?cmd=processChangeForm&id=<%=requestvo.getId()%>">처리상태변경</a>
 				<%
+					}
+							if (requestvo.getProcess_state_id().equals("S03")) {
+				%>
+				<a class="btn btn-primary"
+					href="/ZIOWEB/Factory?cmd=finishRequestForm&id=<%=requestvo.getId()%>">처리완료하기</a>
+				<%
+					}
+						}
 					}
 				%>
 			</div>
 		</div>
-	</section>
+	</div>
+
 </body>
 </html>

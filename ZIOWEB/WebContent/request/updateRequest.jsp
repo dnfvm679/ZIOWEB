@@ -20,10 +20,65 @@
 <title>ZIOWEB</title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-		<!-- Brand/logo -->
-		<a class="navbar-brand" href="/ZIOWEB/Factory?cmd=main">ZIONEX</a>
+	<%
+		RequestVO requestvo = (RequestVO) request.getAttribute("requestvo");
+	%>
+	<div class="container-fluid">
+		<form action="/ZIOWEB/Factory" method="post">
+			<input type="hidden" name="id" value="<%=requestvo.getId()%>">
+			<input type="hidden" name="cmd" value="updateRequest">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th colspan="2">글 상세보기</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="tag">제목</td>
+						<td>
+							<div class="form-gruop">
+								<input class="form-control" name="title"
+									value="<%=requestvo.getTitle()%>">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="tag">작성자</td>
+						<td><%=requestvo.getUser_id()%></td>
+					</tr>
+					<tr>
+						<td class="tag">작성일자</td>
+						<td><%=requestvo.getRequest_date()%></td>
+					</tr>
+					<tr>
+						<td class="tag">내용</td>
+						<td>
+							<div class="form-group">
+								<textarea id="requestwrite" class="form-control" rows="1"
+									maxlength="2048" cols="1" name="content"
+									placeholder="Enter Content"><%=requestvo.getContent()%></textarea>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
+<<<<<<< HEAD
+			<div class="float-right">
+				<%
+					if (requestvo.getUser_id().equals((String) session.getAttribute("userid"))) {
+				%>
+				<button class="btn btn-primary" type="submit">수정하기</button>
+				<%
+					}
+				%>
+				<a class="btn btn-primary" href="/ZIOWEB/Factory?cmd=back">뒤로가기</a>
+			</div>
+
+		</form>
+	</div>
+=======
 		<!-- Toggler/collapsibe Button -->
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#collapsibleNavbar">
@@ -212,5 +267,6 @@
 			}
 		});
 	</script>
+>>>>>>> 파일첨부
 </body>
 </html>

@@ -33,5 +33,17 @@ aside{
 
 .tag{
 	text-align: center;
-	width: 30%;
+	width: 40%;
+}
+
+.text-center{
+	text-align: center;
+}
+
+.text-left{
+	text-align: left;
+}
+
+.text-right{
+	text-align: right;
 }

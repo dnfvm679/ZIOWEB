@@ -139,9 +139,18 @@
 									for (RequestVO r : list) {
 							%>
 							<tr>
+<<<<<<< HEAD
+								<td><a href="#"
+									data-remote="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>"
+									data-toggle="modal" data-target="#theModal"><%=r.getReq_index()%></a></td>
+								<td><a href="#"
+									data-remote="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>"
+									data-toggle="modal" data-target="#theModal"><%=r.getTitle()%></a></td>
+=======
 								<td><a
 									href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"><%=r.getReq_index()%></a></td>
 								<td><a href="/ZIOWEB/Factory?cmd=viewRequest&id=<%=r.getId()%>&state_name=<%=r.getProcess_state_name()%>"><%=r.getTitle()%></a></td>
+>>>>>>> 파일첨부
 								<td><%=r.getUser_name()%></td>
 								<td><%=r.getRequest_date()%></td>
 								<td><%=r.getProcess_state_name()%></td>
@@ -240,10 +249,16 @@
 			</div>
 		</div>
 	</section>
+<<<<<<< HEAD
+	<!-- Modal -->
+	<div class="modal fade" id="theModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+=======
 
 	<!-- Modal -->
 	<div class="modal fade" id="theModal" role="dialog">
 		<div class="modal-dialog">
+>>>>>>> 파일첨부
 			<div class="modal-content">
 				<div class="modal-header"></div>
 				<div class="modal-body">... remote content from "data-remote"
@@ -256,6 +271,39 @@
 		</div>
 	</div>
 
+<<<<<<< HEAD
+
+	<!-- Modal2 -->
+	<div class="modal fade" id="theModal2" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header"></div>
+				<div class="modal-body">... remote content from "data-remote"
+					loads here ...</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Call Target JSP Page Script -->
+	<script>
+		$('#theModal').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+	
+	
+		$('#theModal2').on('show.bs.modal', function(e) {
+			var button = $(e.relatedTarget);
+			var modal = $(this);
+			modal.find('.modal-body').load(button.data("remote"));
+		});
+		
+=======
 	<!-- Call LoginForm.jsp Script -->
 	<script>
 		$('#theModal').on('show.bs.modal', function(e) {
@@ -266,6 +314,7 @@
 			modal.find('.modal-body').load(button.data("remote"));
 	
 		});
+>>>>>>> 파일첨부
 	</script>
 </body>
 </html>
