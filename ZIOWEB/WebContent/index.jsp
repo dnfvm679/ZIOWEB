@@ -94,9 +94,9 @@
 			<%
 				if (userid.equals("ADMIN")) {
 			%>
-			<li class="nav-itme"><a class="nav-link"
+			<li class="nav-itme"><a class="nav-item"
 				href="/ZIOWEB/Factory?cmd=userManagement&page=1">회원관리</a></li>
-			<li class="nav-itme"><a class="nav-link"
+			<li class="nav-itme"><a class="nav-item"
 				href="/ZIOWEB/Factory?cmd=userManagement&page=1">고객사관리</a></li>
 			<%
 				}
@@ -109,6 +109,8 @@
 			%>
 			<li class="nav-item"><a class="nav-link"
 				href="/ZIOWEB/Factory?cmd=getRequestList&page=1">이슈게시판</a></li>
+			<li class="nav-item"><a class="nav-link disabled" href="#">Disabled</a>
+			</li>
 		</ul>
 
 	</aside>
@@ -162,9 +164,9 @@
 				</div>
 				<div class="col-sm-3"></div>
 			</div>
+			<div class="row"></div>
 		</div>
 	</section>
-
 
 	<!-- Google Chart -->
 	<script src="https://www.gstatic.com/charts/loader.js"></script>
